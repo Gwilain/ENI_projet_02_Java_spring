@@ -4,13 +4,12 @@
 	 contenuPage=~{:: main}, ressourcesSupp=~{:: #ressources-css})}" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="utf-8">
-<title th:text="#{login.title}"></title>
+	<meta charset="utf-8">
+	<title th:text="#{login.title}"></title>
 
-<th:block id="ressources-css">
-	<link rel="stylesheet" th:href="@{/css/form.css}" />
-<!--	<link rel="stylesheet" th:href="@{/css/demo-error.css}">-->
-</th:block>
+	<th:block id="ressources-css">
+		<link th:href="@{/css/form.css}" rel="stylesheet" />
+	</th:block>
 </head>
 
 <body>
@@ -26,12 +25,12 @@
 
 			<ul class="flex-outer">
 				<li>
-					<label th:text="#{login.username}"></label>
-					<input name="username" />
+					<label for="username" th:text="#{login.username}"></label>
+					<input id="username" name="username" />
 				</li>
 				<li>
-					<label th:text="#{login.pwd}"></label>
-					<input type="password" name="password" />
+					<label for="password" th:text="#{login.pwd}"></label>
+					<input id="password" type="password" name="password" />
 				</li>
 				<li>
 					<button type="submit" th:text="#{login.button}"></button>
