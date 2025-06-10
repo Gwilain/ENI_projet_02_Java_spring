@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	data-th-replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title}, contenuPage=~{:: main}, ressourcesSupp=~{})}">
+<html lang="fr"
+	  th:replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title}, contenuPage=~{:: main}, ressourcesSupp=~{})}"
+	  xmlns:th="http://www.thymeleaf.org">
 
 
 <head>
 
-<title data-th-text="#{index.title}">page index</title>
+<title th:text="#{index.title}">page index</title>
 
 </head>
 
@@ -13,7 +14,7 @@
 
 	<main class="center-main">
 		<section class="center-section">
-			<h1 style="text-align: center;" data-th-text="#{index.h1}">main index</h1>
+			<h1 style="text-align: center;" th:text="#{index.h1}">main index</h1>
 		</section>
 	</main>
 

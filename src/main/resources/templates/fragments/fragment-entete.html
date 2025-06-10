@@ -1,14 +1,14 @@
 <!-- Navbar -->
-<header xmlns:th="http://www.thymeleaf.org" data-th-fragment="frag-entete">
+<header xmlns:th="http://www.thymeleaf.org" th:fragment="frag-entete">
 
 
 	<section id="nav-title">
 	
 		<h1>
 			<a href="/">
-				<img data-th-src="@{/images/logoEnchere.png}" alt="(Logo)Eni-Encheres" width="100" height="100"
+				<img th:src="@{/images/logoEnchere.png}" alt="(Logo)Eni-Encheres" width="100" height="100"
 					class="logo-img">
-				<span data-th-text="#{nom-application}"></span>
+				<span th:text="#{nom-application}"></span>
 			</a>
 		</h1>
 		
@@ -18,12 +18,12 @@
 	<nav>
 		<ul>
 			<li>
-				<a href="/" data-th-text="#{frag-entete.a.accueil}"></a>
+				<a href="/" th:text="#{frag-entete.a.accueil}"></a>
 			</li>
 
 			<!-- Lien de connexion/login -->
 			<li>
-				<a href="/login" data-th-text="#{frag-entete.a.connexion}"></a>
+				<a href="/login" th:text="#{frag-entete.a.connexion}"></a>
 			</li>
 
 		</ul>
