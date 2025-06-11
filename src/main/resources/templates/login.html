@@ -1,25 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!doctype html>
+<html lang="fr"
+	  th:replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title},
+	 contenuPage=~{:: main}, ressourcesSupp=~{:: #ressources-css})}" xmlns:th="http://www.thymeleaf.org">
 
-<form th:action="@{login}" method="post">
-        <ul class="flex-outer">
-            <li>
-                <label>Login</label>
-                <input name="username" />
-            </li>
-            <li>
-                <label>password</label>
-                <input name ="password" type="password" />
-            </li>
-            <li>
-                <input type="submit">OK</input>
-            </li>
-        </ul>
-    </form>
+<head>
+	<meta charset="utf-8">
+	<title th:text="#{login.title}"></title>
+
+	<th:block id="ressources-css">
+		<link th:href="@{/css/form.css}" rel="stylesheet" />
+	</th:block>
+</head>
+
+<body>
+	<main>
+		<form th:action="@{/login}" method="post">
+
+			<h1 th:text="#{login.h1}"></h1>
+
+			<!-- Message d'erreur apparait uniquement si erreur avec message dynamique  -->
+<!--			<div class="cards" th:if="${param.error}" th:text="#{login.error}"></div>-->
+
+<!--			<div th:if="${param.logout}" th:text="#{login.logout}"></div>-->
+
+			<ul class="flex-outer">
+				<li>
+					<label for="username" th:text="#{login.username}"></label>
+					<input id="username" name="username" />
+				</li>
+				<li>
+					<label for="password" th:text="#{login.pwd}"></label>
+					<input id="password" type="password" name="password" />
+				</li>
+				<li>
+					<button type="submit" th:text="#{login.button}"></button>
+				</li>
+
+				<li>
+					<a href="inscription" th:text="#{login.buttonInscription}"></a>
+				</li>
+			</ul>
+
+		</form>
+	</main>
 </body>
+
 </html>

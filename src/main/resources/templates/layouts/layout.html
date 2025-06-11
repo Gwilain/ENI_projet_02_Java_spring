@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr"
+	  th:fragment="layout-enchere(titrePage, contenuPage, ressourcesSupp)"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<meta charset="UTF-8">
+	<title th:replace="${titrePage}" th:text="#{nom-application}">Enchères</title>
+	<!-- Ajout de la css pour le layout -->
+	<link rel="stylesheet" th:href="@{/css/general.css}">
+	<link rel="stylesheet" th:href="@{/css/layout.css}">
+
+	<!-- Permettre d'ajouter des ressources CSS dynamiquement -->
+	<th:block th:replace="${ressourcesSupp}?:~{}"></th:block>
+
+	<link rel="icon" th:href="@{/images/logoENI.png}" sizes="32x32">
+
+</head>
+
+<body>
+
+<!-- Intégration du fragment d'entête (NavBar) -->
+<div th:replace="~{fragments/fragment-entete :: frag-entete}"></div>
+
+
+<!-- Permet l'integration du contenu spécifique de chaque main -->
+<main th:replace="${contenuPage}?:~{}"></main>
+
+
+<!-- Intégration du fragment piedpage -->
+<div th:replace="~{fragments/fragment-piedpage :: frag-piedpage}"></div>
+
+</body>
+
+</html>
