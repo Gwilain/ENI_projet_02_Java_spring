@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{login}" method="post">
+        <ul class="flex-outer">
+            <li>
+                <label>Login</label>
+                <input name="username" />
+            </li>
+            <li>
+                <label>password</label>
+                <input name ="password" type="password" />
+            </li>
+            <li>
+                <input type="submit">OK</input>
+            </li>
+        </ul>
+    </form>
+</body>
+</html>
