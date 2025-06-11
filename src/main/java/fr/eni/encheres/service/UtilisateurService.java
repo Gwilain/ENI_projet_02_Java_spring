@@ -37,6 +37,11 @@ public class UtilisateurService {
             throw new ServiceException(ServiceExceptionCode.PSEUDO_EXIST);
         }
 
+        if (! utilisateur.getPseudo().matches("^[a-zA-Z0-9_]+$")) {
+            throw new ServiceException(ServiceExceptionCode.PSEUDO_PERMIT);
+        }
+
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String motDePasseEncode = passwordEncoder.encode(utilisateur.getMotDePasse());
         utilisateur.setMotDePasse(motDePasseEncode);
