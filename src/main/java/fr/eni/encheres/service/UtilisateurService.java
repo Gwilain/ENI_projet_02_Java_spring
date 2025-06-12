@@ -46,6 +46,7 @@ public class UtilisateurService {
         String motDePasseEncode = passwordEncoder.encode(utilisateur.getMotDePasse());
         utilisateur.setMotDePasse(motDePasseEncode);
 
+
         return repo.save(utilisateur);
     }
 

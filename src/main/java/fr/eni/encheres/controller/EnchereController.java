@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class EnchereController {
 
-    @Autowired
-    private UtilisateurService utilisateurService;
+//    @Autowired
+//    private UtilisateurService utilisateurService;
 
 
 //    @GetMapping("/")

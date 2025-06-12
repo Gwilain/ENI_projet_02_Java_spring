@@ -14,16 +14,5 @@ public class LoginController {
     }
 
 
-    @GetMapping("/inscription")
-    public String inscription() {
 
-        return "inscription";
-    }
-
-
-    @PostMapping("/inscription")
-    public String crerProfil() {
-
-        return "inscription";
-    }
 }

@@ -14,7 +14,7 @@
 
 <body>
 	<main>
-		<form th:action="@{/inscription}" method="post">
+		<form th:action="@{/inscription}" method="post" th:object="${inscriptionForm}">
 
 			<h1 th:text="#{inscription.h1}"></h1>
 
@@ -27,45 +27,45 @@
 				<div class="form-group">
 					<li>
 						<label for="pseudo" th:text="#{inscription.pseudo}"></label>
-						<input id="pseudo" name="pseudo" />
+						<input id="pseudo" name="pseudo" th:field="*{pseudo}"/>
 					</li>
 					<li>
-						<label for="nom" th:text="#{inscription.nom}"></label>
-						<input id="nom" name="nom" />
+						<label for="nom" th:text="#{inscription.nom}" ></label>
+						<input id="nom" name="nom" th:field="*{nom}"/>
 					</li>
 				</div>
 				<div class="form-group">
 					<li>
 						<label for="prenom" th:text="#{inscription.prenom}"></label>
-						<input id="prenom" name="prenom" />
+						<input id="prenom" name="prenom" th:field="*{prenom}"/>
 					</li>
 
 					<li>
 						<label for="email" th:text="#{inscription.email}"></label>
-						<input id="email" name="email" />
+						<input id="email" name="email" th:field="*{email}"/>
 					</li>
 				</div>
 
 				<li>
 					<label for="telephone" th:text="#{inscription.telephone}"></label>
-					<input id="telephone" name="telephone" />
+					<input id="telephone" name="telephone" th:field="*{telephone}"/>
 				</li>
 
 				<div class="form-group">
 					<li>
 						<label th:text="#{inscription.adresse}"></label>
 						<div style="display: flex; gap: 10px;">
-							<input type="text" id="rue" name="rue" data-th-placeholder="#{inscription.rue}" required>
-							<input type="text" id="codePostal" name="codePostal" data-th-placeholder="#{inscription.cp}" required>
-							<input type="text" id="ville" name="ville"data-th-placeholder="#{inscription.ville}" required>
+							<input type="text" id="rue" name="rue" data-th-placeholder="#{inscription.rue}" th:field="*{rue}" required>
+							<input type="text" id="codePostal" name="codePostal" data-th-placeholder="#{inscription.cp}" th:field="*{codePostal}" required>
+							<input type="text" id="ville" name="ville"data-th-placeholder="#{inscription.ville}" th:field="*{ville}" required>
 						</div>
 					</li>
 				</div>
 
 				<div class="form-group">
 					<li>
-						<label for="mdp" th:text="#{inscription.mdp}"></label>
-						<input id="mdp" name="mdp" />
+						<label for="mdp" th:text="#{inscription.mdp}" ></label>
+						<input id="mdp" name="mdp" th:field="*{mdp}" />
 					</li>
 
 					<li>
