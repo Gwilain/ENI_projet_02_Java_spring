@@ -16,7 +16,7 @@ public class TestController {
     //@GetMapping("/creer-utilisateur")
     public String creer() {
 
-        utilisateurService.creerUtilisateur();
+//        utilisateurService.creerUtilisateur();
         return "ok";
     }
 

@@ -14,7 +14,7 @@ public class Utilisateur {
     @Id
     @NotNull
     @Size(min= 3, max = 30)
-    @Column(length = 100, nullable = false, unique = true)
+    @Column(length = 30, nullable = false, unique = true)
     private String pseudo;
 
     @NotNull
@@ -41,7 +41,9 @@ public class Utilisateur {
     @Column(name = "administrateur", nullable = false)
     private boolean admin = false;
 
-    @ManyToOne
+//    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "no_adresse", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "no_adresse", nullable = false)
     private Adresse adresse;
 }

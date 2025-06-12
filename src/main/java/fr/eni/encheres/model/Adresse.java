@@ -11,18 +11,17 @@ public class Adresse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "no_adresse")
-    private Long id;
+    private Integer id;
 
-
-
+    @Column(name = "rue", nullable = false)
     private String rue;
 
-    @Column(name = "code_postal")
+    @Column(name = "code_postal", nullable = false)
     private String codePostal;
 
+    @Column(name = "ville", nullable = false)
     private String ville;
 
-
-    @Column(name = "adresse_eni")
+    @Column(name = "adresse_eni", nullable = false)
     private boolean adresseEni;
 }

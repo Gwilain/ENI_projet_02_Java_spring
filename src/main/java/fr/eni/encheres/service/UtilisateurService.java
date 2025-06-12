@@ -1,5 +1,6 @@
 package fr.eni.encheres.service;
 
+import fr.eni.encheres.dto.InscriptionForm;
 import fr.eni.encheres.exception.ServiceException;
 import fr.eni.encheres.exception.ServiceExceptionCode;
 import fr.eni.encheres.model.Adresse;
@@ -18,62 +19,105 @@ public class UtilisateurService {
     @Autowired
     private UtilisateurRepository repo;
 
-    @Autowired
-    private AdresseRepository adresseRepo;
-
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
-
-
     @Transactional
-    public Utilisateur save(Utilisateur utilisateur) {
+    public Utilisateur populate(InscriptionForm dto) {
+        Adresse adresse = new Adresse();
+        adresse.setRue(dto.getRue());
+        adresse.setCodePostal(dto.getCodePostal());
+        adresse.setVille(dto.getVille());
 
-        if (repo.existsByEmail(utilisateur.getEmail())) {
-
+        System.out.println("adresse : " + adresse);
+        // Vérifications préalables sur les champs du DTO
+        if (repo.existsByEmail(dto.getEmail())) {
             throw new ServiceException(ServiceExceptionCode.EMAIL_EXIST);
         }
 
-        if (repo.existsByPseudo(utilisateur.getPseudo())) {
+        if (repo.existsByPseudo(dto.getPseudo())) {
             throw new ServiceException(ServiceExceptionCode.PSEUDO_EXIST);
         }
 
-        if (! utilisateur.getPseudo().matches("^[a-zA-Z0-9_]+$")) {
+        if (!dto.getPseudo().matches("^[a-zA-Z0-9_]+$")) {
             throw new ServiceException(ServiceExceptionCode.PSEUDO_PERMIT);
         }
 
-
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String motDePasseEncode = passwordEncoder.encode(utilisateur.getMotDePasse());
-        utilisateur.setMotDePasse(motDePasseEncode);
+        String motDePasseEncode = passwordEncoder.encode(dto.getMdp());
 
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setPseudo(dto.getPseudo());
+        utilisateur.setNom(dto.getNom());
+        utilisateur.setPrenom(dto.getPrenom());
+        utilisateur.setEmail(dto.getEmail());
+        utilisateur.setTelephone(dto.getTelephone());
+        utilisateur.setMotDePasse(motDePasseEncode);
+        utilisateur.setAdresse(adresse);
+
+        System.out.println("utilisateur : " + utilisateur);
+        return utilisateur;
+    }
+
+
+    public Utilisateur register(InscriptionForm dto) {
+        Utilisateur utilisateur = populate(dto);
+
+        System.out.println("saveFromDto utilisateur = " + utilisateur);
 
         return repo.save(utilisateur);
     }
-
-    @Transactional
-    public void creerUtilisateur() {
-        // Créer une adresse
-        Adresse adresse = new Adresse();
-        adresse.setRue("42 rue des Lilas");
-        adresse.setCodePostal("75000");
-        adresse.setVille("Paris");
-        adresse.setAdresseEni(false);
-        adresse = adresseRepo.save(adresse);
-
-        // Créer un utilisateur
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setNom("MARTIN");
-        utilisateur.setPrenom("Jean");
-        utilisateur.setPseudo("j_martin");
-        utilisateur.setEmail("jean.martin@example.com");
-        utilisateur.setMotDePasse("1234");
-        utilisateur.setTelephone("0102030405");
-        utilisateur.setCredit(10);
-        utilisateur.setAdmin(true);
-        utilisateur.setAdresse(adresse);
-
-        save(utilisateur);
-    }
+/// ////////////
+//
+//    @Transactional
+//    public Utilisateur save(Utilisateur utilisateur) {
+//
+//        if (repo.existsByEmail(utilisateur.getEmail())) {
+//
+//            throw new ServiceException(ServiceExceptionCode.EMAIL_EXIST);
+//        }
+//
+//        if (repo.existsByPseudo(utilisateur.getPseudo())) {
+//            throw new ServiceException(ServiceExceptionCode.PSEUDO_EXIST);
+//        }
+//
+//        if (! utilisateur.getPseudo().matches("^[a-zA-Z0-9_]+$")) {
+//            throw new ServiceException(ServiceExceptionCode.PSEUDO_PERMIT);
+//        }
+//
+//
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        String motDePasseEncode = passwordEncoder.encode(utilisateur.getMotDePasse());
+//        utilisateur.setMotDePasse(motDePasseEncode);
+//
+//
+//        return repo.save(utilisateur);
+//    }
+//
+//
+//
+//    public Utilisateur fromDto(InscriptionForm dto) {
+//        Adresse adresse = new Adresse();
+//        adresse.setRue(dto.getRue());
+//        adresse.setCodePostal(dto.getCodePostal());
+//        adresse.setVille(dto.getVille());
+//
+//        Utilisateur utilisateur = new Utilisateur();
+//        utilisateur.setPseudo(dto.getPseudo());
+//        utilisateur.setNom(dto.getNom());
+//        utilisateur.setPrenom(dto.getPrenom());
+//        utilisateur.setEmail(dto.getEmail());
+//        utilisateur.setTelephone(dto.getTelephone());
+//        utilisateur.setMotDePasse(dto.getMdp()); // sera hashé plus tard
+//        utilisateur.setAdresse(adresse);
+//
+//        return utilisateur;
+//    }
+//
+//    public Utilisateur saveFromDto(InscriptionForm dto) {
+//        Utilisateur utilisateur = fromDto(dto);
+//
+//        // vérifications et hash du mot de passe...
+//
+//        return repo.save(utilisateur);
+//    }
 
 
 }
