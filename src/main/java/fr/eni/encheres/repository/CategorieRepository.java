@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface CategorieRepository extends JpaRepository<Categorie, Integer> {
 
-        List<ArticleAVendre> findByCategorieId(Long categorieId);
+//        List<ArticleAVendre> findByCategorieId(long categorieId);
 
 }

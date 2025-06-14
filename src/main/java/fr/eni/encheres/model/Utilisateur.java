@@ -6,10 +6,13 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.antlr.v4.runtime.misc.NotNull;
 
+import java.io.Serializable;
+
 @Data
 @Entity
 @Table(name = "UTILISATEURS")
-public class Utilisateur {
+public class Utilisateur implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @NotNull
@@ -43,7 +46,9 @@ public class Utilisateur {
 
 //    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JoinColumn(name = "no_adresse", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "no_adresse", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "no_adresse", nullable = false)
     private Adresse adresse;
 }

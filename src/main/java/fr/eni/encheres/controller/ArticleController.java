@@ -36,12 +36,13 @@ public class ArticleController {
 //    }
 
     @GetMapping("/")
-    public String afficherIndex(@RequestParam(value = "categorieId", required = false) Long categorieId, Model model) {
+    public String afficherIndex(@RequestParam(value = "categorieId", required = false) Integer categorieId, Model model) {
+
         List<Categorie> categories = categorieService.findAll();
         List<ArticleAVendre> articles;
 
         if (categorieId != null) {
-            articles = articleService.findByCategorieId(categorieId);
+            articles = articleService.findByCategorieId( categorieId);
             model.addAttribute("selectedCategorieId", categorieId);
         } else {
             articles = articleService.findAll();

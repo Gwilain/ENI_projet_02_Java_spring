@@ -19,7 +19,7 @@
 
 		<form method="get" th:action="@{/}">
 			<select name="categorieId" id="categorie" onchange="this.form.submit()">
-				<option value="" disabled selected>-- Choisir une catégorie --</option>
+				<option value="" th:selected="${selectedCategorieId == null}" data-th-text="#{index.toutesCat}"></option>
 				<option th:each="cat : ${categories}"
 						th:value="${cat.id}"
 						th:text="${cat.libelle}"
@@ -29,17 +29,16 @@
 		</form>
 
 		<section class="center-section">
-
 			<ul>
 				<li data-th-each="article : ${articles}">
 					<h3 data-th-text="${article.nom }"></h3>
 					<p th:text="#{article.dateFin} + ' ' +${article.prixVente != null ? article.prixVente : article.prixInitial}"></p>
 
 					<p data-th-text="#{article.dateFin} + ' ' +${@dateUtil.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></p>
-					<p data-th-text="#{article.vendeur} + ' ' +${article.vendeur.pseudo}"></p>
+					<span data-th-text="#{article.vendeur}"></span><a th:href="@{/utilisateur/profil(pseudo=${article.vendeur.pseudo})}" data-th-text="${article.vendeur.pseudo}"></a>
+
 				</li>
 			</ul>
-
 
 		</section>
 	</main>

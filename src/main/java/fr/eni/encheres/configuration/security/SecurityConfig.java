@@ -50,7 +50,7 @@ public class SecurityConfig {
 
         http.formLogin( form -> {
             form.loginPage("/login").permitAll()
-                    .defaultSuccessUrl("/", true);
+                    .defaultSuccessUrl("/session", true);
 
         });
 

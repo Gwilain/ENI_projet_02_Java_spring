@@ -5,6 +5,7 @@ import fr.eni.encheres.repository.ArticleAVendreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -15,10 +16,11 @@ public class ArticleService {
 
     public List<ArticleAVendre> findAll(){
 
-        return articleAVendreRepository.findAll();
+//        return articleAVendreRepository.findAll();
+        return articleAVendreRepository.findEncheresEnCours(LocalDate.now());
     };
 
-    public List<ArticleAVendre> findByCategorieId(int id){
+    public List<ArticleAVendre> findByCategorieId(Integer id){
 
         return articleAVendreRepository.findByCategorieId(id);
     }

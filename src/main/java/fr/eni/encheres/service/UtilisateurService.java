@@ -18,6 +18,8 @@ public class UtilisateurService {
 
     @Autowired
     private UtilisateurRepository repo;
+    @Autowired
+    private UtilisateurRepository utilisateurRepository;
 
     @Transactional
     public Utilisateur populate(InscriptionForm dto) {
@@ -52,7 +54,6 @@ public class UtilisateurService {
         utilisateur.setMotDePasse(motDePasseEncode);
         utilisateur.setAdresse(adresse);
 
-        System.out.println("utilisateur : " + utilisateur);
         return utilisateur;
     }
 
@@ -64,60 +65,16 @@ public class UtilisateurService {
 
         return repo.save(utilisateur);
     }
-/// ////////////
-//
-//    @Transactional
-//    public Utilisateur save(Utilisateur utilisateur) {
-//
-//        if (repo.existsByEmail(utilisateur.getEmail())) {
-//
-//            throw new ServiceException(ServiceExceptionCode.EMAIL_EXIST);
-//        }
-//
-//        if (repo.existsByPseudo(utilisateur.getPseudo())) {
-//            throw new ServiceException(ServiceExceptionCode.PSEUDO_EXIST);
-//        }
-//
-//        if (! utilisateur.getPseudo().matches("^[a-zA-Z0-9_]+$")) {
-//            throw new ServiceException(ServiceExceptionCode.PSEUDO_PERMIT);
-//        }
-//
-//
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        String motDePasseEncode = passwordEncoder.encode(utilisateur.getMotDePasse());
-//        utilisateur.setMotDePasse(motDePasseEncode);
-//
-//
-//        return repo.save(utilisateur);
-//    }
-//
-//
-//
-//    public Utilisateur fromDto(InscriptionForm dto) {
-//        Adresse adresse = new Adresse();
-//        adresse.setRue(dto.getRue());
-//        adresse.setCodePostal(dto.getCodePostal());
-//        adresse.setVille(dto.getVille());
-//
-//        Utilisateur utilisateur = new Utilisateur();
-//        utilisateur.setPseudo(dto.getPseudo());
-//        utilisateur.setNom(dto.getNom());
-//        utilisateur.setPrenom(dto.getPrenom());
-//        utilisateur.setEmail(dto.getEmail());
-//        utilisateur.setTelephone(dto.getTelephone());
-//        utilisateur.setMotDePasse(dto.getMdp()); // sera hashé plus tard
-//        utilisateur.setAdresse(adresse);
-//
-//        return utilisateur;
-//    }
-//
-//    public Utilisateur saveFromDto(InscriptionForm dto) {
-//        Utilisateur utilisateur = fromDto(dto);
-//
-//        // vérifications et hash du mot de passe...
-//
-//        return repo.save(utilisateur);
-//    }
+
+    public Utilisateur findUser(String alias){
+            if(alias.contains("@")){
+
+              return utilisateurRepository.findByEmail(alias);
+
+            }else{
+                return utilisateurRepository.findByPseudo(alias);
+            }
+     }
 
 
 }

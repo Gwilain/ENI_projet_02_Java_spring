@@ -1,0 +1,99 @@
+
+<form xmlns:th="http://www.thymeleaf.org" th:fragment="frag-inscription-modif"
+	  xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+
+		th:action="@{/utilisateur/inscription}" method="post" th:object="${inscriptionForm}">
+
+	<h1 th:text="#{inscription.h1}"></h1>
+
+	<!-- Message d'erreur apparait uniquement si erreur avec message dynamique  -->
+	<!--			<div class="cards" th:if="${param.error}" th:text="#{login.error}"></div>-->
+
+	<!--			<div th:if="${param.logout}" th:text="#{login.logout}"></div>-->
+
+	<ul class="flex-outer">
+		<div class="form-group">
+			<li>
+				<label for="pseudo">
+					<span th:text="#{inscription.pseudo}"></span>
+					<span class="asterix" th:classappend="${#fields.hasErrors('pseudo')} ? ' has-error' : ''">*</span>
+				</label>
+				<input id="pseudo" name="pseudo" th:field="*{pseudo}" required/>
+			</li>
+			<li>
+				<label for="nom">
+					<span th:text="#{inscription.nom}"></span>
+					<span class="asterix">*</span>
+				</label>
+				<input id="nom" name="nom" th:field="*{nom}" required/>
+			</li>
+		</div>
+
+		<div class="form-group">
+			<li>
+				<label for="prenom">
+					<span th:text="#{inscription.prenom}"></span>
+					<span class="asterix" th:classappend="${#fields.hasErrors('pseudo')} ? 'has-error' : ''">*</span>
+				</label>
+				<input id="prenom" name="prenom" th:field="*{prenom}" required/>
+			</li>
+
+			<li>
+				<label for="email">
+					<span th:text="#{inscription.email}"></span>
+					<span class="asterix">*</span>
+				</label>
+				<input id="email" name="email" th:field="*{email}" required/>
+			</li>
+		</div>
+
+		<li>
+			<label for="telephone">
+				<span th:text="#{inscription.telephone}"></span>
+				<!-- Pas d'astérisque ici -->
+			</label>
+			<input id="telephone" name="telephone" th:field="*{telephone}" />
+		</li>
+
+		<div class="form-group">
+			<li>
+				<label>
+					<span th:text="#{inscription.adresse}"></span>
+					<span class="asterix">*</span>
+				</label>
+				<div style="display: flex; gap: 10px;">
+					<input type="text" id="rue" name="rue" data-th-placeholder="#{inscription.rue}" th:field="*{rue}" required />
+					<input type="text" id="codePostal" name="codePostal" data-th-placeholder="#{inscription.cp}" th:field="*{codePostal}" required />
+					<input type="text" id="ville" name="ville" data-th-placeholder="#{inscription.ville}" th:field="*{ville}" required />
+				</div>
+			</li>
+		</div>
+
+		<div class="form-group">
+			<li>
+				<label for="mdp">
+					<span th:text="#{inscription.mdp}"></span>
+					<span class="asterix">*</span>
+				</label>
+				<input id="mdp" name="mdp" th:field="*{mdp}" required/>
+			</li>
+
+			<li>
+				<label for="mdpConfirm">
+					<span th:text="#{inscription.mdpConfirm}"></span>
+					<span class="asterix">*</span>
+				</label>
+				<input id="mdpConfirm" name="mdpConfirm" th:field="*{mdpConfirm}" required />
+			</li>
+		</div>
+
+		<li>
+			<button type="submit" th:text="#{inscription.creer}"></button>
+		</li>
+
+		<li>
+			<a href="/index" th:text="#{inscription.annuler}"></a>
+		</li>
+	</ul>
+
+</form>
