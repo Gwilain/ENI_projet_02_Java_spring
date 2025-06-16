@@ -24,4 +24,9 @@ public class Adresse {
 
     @Column(name = "adresse_eni", nullable = false)
     private boolean adresseEni;
+
+
+    public String affichageComplet() {
+        return rue + ", " + codePostal + " " + ville;
+    }
 }

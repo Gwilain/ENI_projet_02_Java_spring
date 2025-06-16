@@ -2,7 +2,7 @@
 <form xmlns:th="http://www.thymeleaf.org" th:fragment="frag-inscription-modif"
 	  xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
 
-		th:action="@{/utilisateur/inscription}" method="post" th:object="${inscriptionForm}">
+	  th:action="@{${modeModif} ? '/utilisateur/modifier-profil' : '/utilisateur/inscription' }" method="post" th:object="${inscriptionForm}">
 
 	<h1 th:text="#{inscription.h1}"></h1>
 
@@ -18,7 +18,9 @@
 					<span th:text="#{inscription.pseudo}"></span>
 					<span class="asterix" th:classappend="${#fields.hasErrors('pseudo')} ? ' has-error' : ''">*</span>
 				</label>
-				<input id="pseudo" name="pseudo" th:field="*{pseudo}" required/>
+				<input sec:authorize="!isAuthenticated()" id="pseudo" name="pseudo" th:field="*{pseudo}" required/>
+				<span sec:authorize="isAuthenticated()" th:text="*{pseudo}">pseudo</span>
+				<input sec:authorize="isAuthenticated()" name="pseudoInitial" type="hidden" th:field="*{pseudo}" />
 			</li>
 			<li>
 				<label for="nom">
@@ -88,7 +90,8 @@
 		</div>
 
 		<li>
-			<button type="submit" th:text="#{inscription.creer}"></button>
+			<button sec:authorize="!isAuthenticated()" type="submit" th:text="#{inscription.creer}"></button>
+			<button sec:authorize="isAuthenticated()" type="submit" th:text="#{inscription.modifier}"></button>
 		</li>
 
 		<li>

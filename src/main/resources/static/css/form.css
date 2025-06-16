@@ -1,5 +1,12 @@
 @charset "UTF-8";
+/*
 
+input{
+	padding: 1rem;
+	border-radius: 1rem;
+}
+*/
+/*
 form {
 	background-color: #b5dff6;
 	border-radius: 5px;
@@ -35,8 +42,8 @@ form h1 {
 	letter-spacing: .09em;
 	border-radius: 2px;
 	padding: 8px 16px
-}
-
+}*/
+/*
 .asterix {
 	color: black;
 	font-weight: bold;
@@ -45,4 +52,4 @@ form h1 {
 
 .has-error .asterix {
 	color: red;
-}
+}*/

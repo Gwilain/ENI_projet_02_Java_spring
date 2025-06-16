@@ -15,10 +15,12 @@ public interface ArticleAVendreRepository extends JpaRepository<ArticleAVendre, 
 //    List<ArticleAVendre> findByVendeurPseudo(String pseudo);
     List<ArticleAVendre> findByCategorieId(Integer categorieId);
 
-//    List<ArticleAVendre> findByDateDebutEncheresBeforeAndDateFinEncheresAfterOrderByDateFinEncheresAsc(
-//            LocalDate now1, LocalDate now2);
+    //    List<ArticleAVendre> findByDateDebutEncheresBeforeAndDateFinEncheresAfterOrderByDateFinEncheresAsc(
+    //            LocalDate now1, LocalDate now2);
 
     @Query("SELECT a FROM ArticleAVendre a WHERE :now BETWEEN a.dateDebutEncheres AND a.dateFinEncheres ORDER BY a.dateFinEncheres ASC")
     List<ArticleAVendre> findEncheresEnCours(@Param("now") LocalDate now);
+
+
 
 }

@@ -42,6 +42,8 @@ public class UtilisateurController {
             return "inscription";
         }
 
+        model.addAttribute("modeModif", false);
+
         utilisateurService.register(form);
 //        try {
 //            Utilisateur utilisateur = fromDto(form);
@@ -106,6 +108,8 @@ public class UtilisateurController {
     @GetMapping("/modifier-profil")
     public String modifierProfil(HttpSession session, Model model) {
 
+
+        model.addAttribute("modeModif", true);
 //        System.out.println("modifierProfil ::: Session ID: " + session.getId());
 //        System.out.println("modifierProfil ::: Contenu session: " + session.getAttributeNames());
 
@@ -127,27 +131,38 @@ public class UtilisateurController {
         form.setPrenom(user.getPrenom());
         form.setEmail(user.getEmail());
         form.setRue( user.getAdresse().getRue() );
-        form.setRue( user.getAdresse().getCodePostal() );
-        form.setRue( user.getAdresse().getVille() );
+        form.setCodePostal( user.getAdresse().getCodePostal() );
+        form.setVille( user.getAdresse().getVille() );
 
         model.addAttribute("inscriptionForm", form);
 
-       // model.addAttribute("modifProfil", true);
+        //model.addAttribute("modifProfil", true);
 
         return "inscription";
     }
 
-//    @GetMapping("modifier-profil")
-//    public String afficherProfil() {
-//
-//        String pseudo = userDetails.getUsername();
-//
-//        Utilisateur utilisateur = utilisateurService.findUser(pseudo);
-//               // .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
-//
-//        model.addAttribute("utilisateur", utilisateur);
-//
-//        return "inscription";
-//    }
+    @PostMapping("/modifier-profil")
+    public String savegModifierProfil(@Valid @ModelAttribute InscriptionForm form,
+                                      BindingResult bindingResult,
+                                      HttpSession session,
+                                      Model model) {
+
+        System.out.println("savegModifierProfil");
+
+        Utilisateur user = (Utilisateur)  session.getAttribute("userInSession");
+
+        String pseudoSession = user.getPseudo();
+
+        System.out.println("controler modification");
+
+        if (bindingResult.hasErrors()) {
+            return "/modifier-profil";
+        }
+
+        utilisateurService.savegModifierProfil(form, pseudoSession);
+
+        return "redirect:/";
+
+    }
 
 }

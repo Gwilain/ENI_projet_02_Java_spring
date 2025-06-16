@@ -48,7 +48,7 @@ public class Utilisateur implements Serializable {
 //    @JoinColumn(name = "no_adresse", nullable = false)
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "no_adresse", nullable = false)
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "no_adresse", nullable = false)
     private Adresse adresse;
 }

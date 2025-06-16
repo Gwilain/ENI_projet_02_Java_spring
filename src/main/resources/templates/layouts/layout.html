@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr"
-	  th:fragment="layout-enchere(titrePage, contenuPage, ressourcesSupp)"
+	  th:fragment="layout-enchere(titrePage, contenuPage, ressourcesSupp, scriptsJs)"
 	  xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -14,7 +14,7 @@
 	<!-- Permettre d'ajouter des ressources CSS dynamiquement -->
 	<th:block th:replace="${ressourcesSupp}?:~{}"></th:block>
 
-	<link rel="icon" th:href="@{/images/logoENI.png}" sizes="32x32">
+	<link rel="icon" th:href="@{/images/pitcoIco.png}" sizes="32x32">
 
 </head>
 
@@ -31,6 +31,7 @@
 <!-- Intégration du fragment piedpage -->
 <div th:replace="~{fragments/fragment-piedpage :: frag-piedpage}"></div>
 
+<th:block th:replace="${scriptsJs}?:~{}"></th:block>
 </body>
 
 </html>

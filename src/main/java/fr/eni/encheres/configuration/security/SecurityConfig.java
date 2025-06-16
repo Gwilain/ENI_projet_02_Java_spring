@@ -42,6 +42,7 @@ public class SecurityConfig {
                             .requestMatchers("/login").permitAll()
                             .requestMatchers("/utilisateur/inscription").permitAll()
                             .requestMatchers("/css/**").permitAll()
+                            .requestMatchers("/js/**").permitAll()
                             .requestMatchers("/images/**").permitAll()
                             .anyRequest().authenticated();
                 });

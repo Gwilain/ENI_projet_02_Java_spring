@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr"
-	  th:replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title}, contenuPage=~{:: main}, ressourcesSupp=~{})}"
+	  th:replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title}, contenuPage=~{:: main}, ressourcesSupp=~{:: js-filtre}, scriptsJs=~{:: js-filtre})}"
 	  xmlns:th="http://www.thymeleaf.org">
 
 
@@ -8,41 +8,60 @@
 
 <title th:text="#{index.title}">page index</title>
 
+
+
 </head>
 
 <body>
+	<main>
+		<div class="content">
+			<h2 data-th-text="#{index.h2}"></h2>
 
+			<form class="filterForm" method="get" th:action="@{/}">
 
+				<span th:text="#{index.filtres}"></span>
 
-	<main class="center-main">
-		<h2 data-th-text="#{index.h2}"></h2>
+				<input id="contient" name="contient" th:value="${contient}" th:placeholder="#{index.nomContient}" />
 
-		<form method="get" th:action="@{/}">
-			<select name="categorieId" id="categorie" onchange="this.form.submit()">
-				<option value="" th:selected="${selectedCategorieId == null}" data-th-text="#{index.toutesCat}"></option>
-				<option th:each="cat : ${categories}"
-						th:value="${cat.id}"
-						th:text="${cat.libelle}"
-						th:selected="${cat.id == selectedCategorieId}">
-				</option>
-			</select>
-		</form>
+				<select name="categorieId" id="categorie">
+					<option value="" th:selected="${selectedCategorieId == null}" data-th-text="#{index.toutesCat}"></option>
+					<option th:each="cat : ${categories}"
+							th:value="${cat.id}"
+							th:text="${cat.libelle}"
+							th:selected="${cat.id == selectedCategorieId}">
+					</option>
 
-		<section class="center-section">
-			<ul>
-				<li data-th-each="article : ${articles}">
-					<h3 data-th-text="${article.nom }"></h3>
-					<p th:text="#{article.dateFin} + ' ' +${article.prixVente != null ? article.prixVente : article.prixInitial}"></p>
+				</select>
 
-					<p data-th-text="#{article.dateFin} + ' ' +${@dateUtil.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></p>
-					<span data-th-text="#{article.vendeur}"></span><a th:href="@{/utilisateur/profil(pseudo=${article.vendeur.pseudo})}" data-th-text="${article.vendeur.pseudo}"></a>
+				<button class="btnIcon" type="submit">
+					<img class="search" th:src="@{/images/search.svg}" alt="Rechercher" />
+				</button>
 
-				</li>
-			</ul>
+				<button class="btnIcon" type="button" id="resetBtn">
+					<img class="close" th:src="@{/images/close.svg}" alt="Réinitialiser" />
+				</button>
 
-		</section>
+			</form>
+
+			<section>
+				<ul class="articleContainer">
+					<li class="articleCards" data-th-each="article : ${articles}">
+						<h3 data-th-text="${article.nom }"></h3>
+<!--						<p th:text="#{article.dateDebut} + ' ' +${article.prixVente != null ? article.prixVente : article.prixInitial}"></p>-->
+
+						<p data-th-text="#{article.dateFin} + ' ' +${@dateUtil.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></p>
+						<span data-th-text="#{article.vendeur}"></span><a th:href="@{/utilisateur/profil(pseudo=${article.vendeur.pseudo})}" data-th-text="${article.vendeur.pseudo}"></a>
+
+					</li>
+				</ul>
+
+			</section>
+		</div>
 	</main>
 
+	<th:block id="js-filtre" th:fragment="js-filtre">
+		<script th:src="@{/js/filtre.js}"></script>
+	</th:block>
 </body>
 
 </html>

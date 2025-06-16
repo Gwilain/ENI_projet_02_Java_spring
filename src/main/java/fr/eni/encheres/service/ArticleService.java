@@ -24,4 +24,10 @@ public class ArticleService {
 
         return articleAVendreRepository.findByCategorieId(id);
     }
+
+//    public List<ArticleAVendre> findByNomContainingIgnoreCase(){
+//
+//
+//        return lst;
+//    }
 }

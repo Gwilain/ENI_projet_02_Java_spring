@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr"
-	  th:replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title}, contenuPage=~{:: main}, ressourcesSupp=~{})}"
+	  th:replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title}, contenuPage=~{:: main}, ressourcesSupp=~{}), scriptsJs=~{}}"
 	  xmlns:th="http://www.thymeleaf.org">
 
 
@@ -11,9 +11,6 @@
 </head>
 
 <body>
-
-
-
 	<main class="center-main">
 		<section>
 			<h1  data-th-text="${user.pseudo}"></h1>
