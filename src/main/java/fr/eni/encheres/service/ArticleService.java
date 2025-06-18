@@ -9,6 +9,7 @@ import fr.eni.encheres.model.Utilisateur;
 import fr.eni.encheres.repository.AdresseRepository;
 import fr.eni.encheres.repository.ArticleAVendreRepository;
 import fr.eni.encheres.repository.CategorieRepository;
+import jakarta.persistence.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,59 @@ public class ArticleService {
         articleAVendreRepository.save(article);
     }
 
-    public List<ArticleAVendre> find(Integer categorieId, String contient, Integer typeEnchere, String pseudo){
+    public List<ArticleAVendre> find( Boolean achats, Integer categorieId, String contient, Integer typeEnchere, String pseudo){
+
+        List<ArticleAVendre> articles = new ArrayList<>();
+
+        if(achats){
+            articles = findAchat(categorieId, contient, typeEnchere, pseudo);
+        }else{
+            articles = findVente(categorieId, contient, typeEnchere, pseudo);
+        }
+
+        articles = ArticleChainFilter.contains(articles, contient );
+
+        return articles;
+    }
+
+    public List<ArticleAVendre> findAchat(Integer categorieId, String contient, Integer typeEnchere, String pseudo){
+
+        List<ArticleAVendre> articles = new ArrayList<>();
+
+        if( typeEnchere == 0 ){
+
+            System.out.println("typeEnchere == 0");
+
+            if (categorieId != null) {
+                articles = articleAVendreRepository.findEncheresEnCoursByCategorie(LocalDate.now(), categorieId);
+            } else {
+                articles = articleAVendreRepository.findEncheresEnCours(LocalDate.now());
+            }
+
+        }else if(typeEnchere == 1){
+
+            if (categorieId != null) {
+                articles = articleAVendreRepository.findArticlesEnCoursEncherisParEtCategorie(pseudo, categorieId);
+            } else {
+                articles = articleAVendreRepository.findArticlesEnCoursEncherisPar(pseudo);
+            }
+
+        }else if(typeEnchere == 2){
+
+            if (categorieId != null) {
+                articles = articleAVendreRepository.findArticlesRemportesByPseudoAndCategorie(pseudo, LocalDate.now(), categorieId);
+            } else {
+                articles = articleAVendreRepository.findArticlesRemportesByPseudo(pseudo, LocalDate.now());
+            }
+
+        }
+
+       // articles = ArticleChainFilter.contains(articles, contient );
+
+        return articles;
+    }
+
+    public List<ArticleAVendre> findVente(Integer categorieId, String contient, Integer typeEnchere, String pseudo){
 
         List<ArticleAVendre> articles = new ArrayList<>();
 
@@ -54,45 +107,29 @@ public class ArticleService {
             System.out.println("typeEnchere == 0");
 
             if (categorieId != null) {
-                System.out.println("categorieId  != null => " + categorieId);
-                articles = articleAVendreRepository.findEncheresEnCoursByCategorie(LocalDate.now(), categorieId);
-
-                System.out.println("articles = "+articles);
-
+                articles = articleAVendreRepository.findVentesEnCoursByPseudoAndCategorie(pseudo, categorieId,LocalDate.now());
             } else {
-                System.out.println("categorieId == null => " + categorieId);
-                articles = articleAVendreRepository.findEncheresEnCours(LocalDate.now());
-               // articles = articleAVendreRepository.findAll();
-                System.out.println("articles = "+articles);
-
+                articles = articleAVendreRepository.findVentesEnCoursByPseudo(pseudo,LocalDate.now());
             }
 
         }else if(typeEnchere == 1){
-            System.out.println("typeEnchere != 0");
+
             if (categorieId != null) {
-
-                articles = articleAVendreRepository.findArticlesEnCoursEncherisParEtCategorie(pseudo, categorieId);
-                System.out.println("enchere en cours par categorie = "+categorieId +" par "+pseudo);
-
+                articles = articleAVendreRepository.findVentesNonDebuteesByPseudoAndCategorie(pseudo, categorieId, LocalDate.now());
             } else {
-
-                System.out.println("enchere en cours par "+pseudo);
-                articles = articleAVendreRepository.findArticlesEnCoursEncherisPar(pseudo);
+                articles = articleAVendreRepository.findVentesNonDebuteesByPseudo(pseudo, LocalDate.now());
             }
+
         }else if(typeEnchere == 2){
 
             if (categorieId != null) {
-
-                articles = articleAVendreRepository.findArticlesRemportesByPseudoAndCategorie(pseudo, LocalDate.now(), categorieId);
-
+                articles = articleAVendreRepository.findVentesTermineesByPseudoAndCategorie(pseudo, categorieId, LocalDate.now());
             } else {
-
-                articles = articleAVendreRepository.findArticlesRemportesByPseudo(pseudo, LocalDate.now());
+                articles = articleAVendreRepository.findVentesTermineesByPseudo(pseudo, LocalDate.now());
             }
-
         }
 
-        articles = ArticleChainFilter.contains(articles, contient );
+        // articles = ArticleChainFilter.contains(articles, contient );
 
         return articles;
     }

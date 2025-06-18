@@ -1,4 +1,29 @@
 let initialized = false;
+function init2() {
+
+    console.log("init js");
+    if (initialized) {
+        console.warn("init() déjà appelé, on skip");
+        return;
+    }
+
+    initialized = true;
+
+    document.getElementById('resetBtn').addEventListener('click', function() {
+        // Vide les champs du formulaire
+        const categorieSelect = document.querySelector('select[name="categorieId"]');
+        const contientInput = document.querySelector('input[name="contient"]');
+
+        if (categorieSelect) categorieSelect.value = '';
+        if (contientInput) contientInput.value = '';
+
+        // Soumet le formulaire (ou redirige vers la page sans params)
+        // Si ton formulaire a un id, mieux vaut utiliser submit()
+        document.querySelector('form.filterForm').submit();
+    });
+
+
+}
 
 function init() {
     console.log("init js");
@@ -72,4 +97,4 @@ function init() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', init2);

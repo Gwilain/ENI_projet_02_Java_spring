@@ -31,9 +31,6 @@ public class VendreController {
     @Autowired
     private CategorieService categorieService;
 
-//    public VendreController(VendreController categorieService){
-//        this.categorieService = categorieService;
-//    }
 
 
     @GetMapping("/vendre")
@@ -48,12 +45,6 @@ public class VendreController {
 
         List<Categorie> categories = categorieService.getAllCategories();
 
-//        if (categories == null || categories.isEmpty()) {
-//            categories = categorieService.findAll();
-//            System.out.println( "categories in article à vendre : " + categories );
-//            model.addAttribute("categories", categories);
-//        }
-
         Utilisateur user = (Utilisateur)  session.getAttribute("userInSession");
         Adresse userAdresse  = user.getAdresse();
         System.out.println("userAdresse = " + userAdresse);
@@ -63,7 +54,6 @@ public class VendreController {
         model.addAttribute("categories", categories);
         model.addAttribute("adresseVendeur", userAdresse);
         model.addAttribute("adressesEni", adressesEni);
-
 
         return "vendre";
     }

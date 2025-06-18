@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface ArticleAVendreRepository extends JpaRepository<ArticleAVendre, Long> {
-//    List<ArticleAVendre> findByVendeurPseudo(String pseudo);
+
     List<ArticleAVendre> findByCategorieId(Integer categorieId);
 
     //    List<ArticleAVendre> findByDateDebutEncheresBeforeAndDateFinEncheresAfterOrderByDateFinEncheresAsc(
@@ -64,6 +64,7 @@ public interface ArticleAVendreRepository extends JpaRepository<ArticleAVendre, 
     @Query("""
     SELECT e.articleAVendre FROM Enchere e
     WHERE e.encherisseur.pseudo = :pseudo
+    AND e.articleAVendre.categorie.id = :categorieId
     AND e.montant = (
         SELECT MAX(e2.montant) FROM Enchere e2
         WHERE e2.articleAVendre.id = e.articleAVendre.id
@@ -72,5 +73,56 @@ public interface ArticleAVendreRepository extends JpaRepository<ArticleAVendre, 
 """)
     List<ArticleAVendre> findArticlesRemportesByPseudoAndCategorie(@Param("pseudo") String pseudo, @Param("now") LocalDate now, @Param("categorieId") Integer categorieId);
 
-    List<ArticleAVendre> findEncheresEnCoursByCategorie(Categorie categorie);
+
+
+    @Query("""
+    SELECT a FROM ArticleAVendre a
+    WHERE a.vendeur.pseudo = :pseudo
+      AND :now BETWEEN a.dateDebutEncheres AND a.dateFinEncheres
+""")
+    List<ArticleAVendre> findVentesEnCoursByPseudo(@Param("pseudo") String pseudo, @Param("now") LocalDate now);
+
+
+    @Query("""
+    SELECT a FROM ArticleAVendre a
+    WHERE a.vendeur.pseudo = :pseudo
+      AND a.categorie.id = :categorieId
+      AND :now BETWEEN a.dateDebutEncheres AND a.dateFinEncheres
+""")
+    List<ArticleAVendre> findVentesEnCoursByPseudoAndCategorie(@Param("pseudo") String pseudo, @Param("categorieId") Integer categorieId, @Param("now") LocalDate now);
+
+
+    @Query("""
+    SELECT a FROM ArticleAVendre a
+    WHERE a.vendeur.pseudo = :pseudo
+      AND a.dateDebutEncheres > :now
+""")
+    List<ArticleAVendre> findVentesNonDebuteesByPseudo(@Param("pseudo") String pseudo, @Param("now") LocalDate now);
+
+    @Query("""
+    SELECT a FROM ArticleAVendre a
+    WHERE a.vendeur.pseudo = :pseudo
+      AND a.categorie.id = :categorieId
+      AND a.dateDebutEncheres > :now
+""")
+    List<ArticleAVendre> findVentesNonDebuteesByPseudoAndCategorie(@Param("pseudo") String pseudo, @Param("categorieId") Integer categorieId, @Param("now") LocalDate now);
+
+
+    @Query("""
+    SELECT a FROM ArticleAVendre a
+    WHERE a.vendeur.pseudo = :pseudo
+      AND a.dateFinEncheres < :now
+""")
+    List<ArticleAVendre> findVentesTermineesByPseudo(@Param("pseudo") String pseudo, @Param("now") LocalDate now);
+
+
+    @Query("""
+    SELECT a FROM ArticleAVendre a
+    WHERE a.vendeur.pseudo = :pseudo
+      AND a.categorie.id = :categorieId
+      AND a.dateFinEncheres < :now
+""")
+    List<ArticleAVendre> findVentesTermineesByPseudoAndCategorie(@Param("pseudo") String pseudo, @Param("categorieId") Integer categorieId, @Param("now") LocalDate now);
+
+
 }

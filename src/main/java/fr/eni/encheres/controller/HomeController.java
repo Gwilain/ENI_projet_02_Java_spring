@@ -9,6 +9,7 @@ import fr.eni.encheres.model.Utilisateur;
 import fr.eni.encheres.service.AdresseService;
 import fr.eni.encheres.service.ArticleService;
 import fr.eni.encheres.service.CategorieService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,35 +41,99 @@ public class HomeController {
     }
 
 
-    @GetMapping("/")
-    public String afficherIndex(@RequestParam(value = "categorieId", required = false) Integer categorieId,
-                                @RequestParam(value = "contient", required = false) String contient,
-                                @RequestParam(value = "typeEnchere", required = false) Integer typeEnchere,
+    @GetMapping({"/", "/mes-encheres-en-cours", "/mes-encheres-remportees"})
+    public String achats(
+            HttpServletRequest request,
+            HttpSession session,
+            Model model,
+            @RequestParam(value = "categorieId", required = false) Integer categorieId,
+            @RequestParam(value = "contient", required = false) String contient) {
+
+        String path = request.getServletPath();
+        int typeEnchere = switch (path) {
+            case "/mes-encheres-en-cours" -> 1;
+            case "/mes-encheres-remportees" -> 2;
+            default -> 0;
+        };
+
+        String currentPath = request.getServletPath();
+        model.addAttribute("formActionUrl", currentPath);
+
+        String baseParams = "";
+        if (categorieId != null) {
+            baseParams += "?categorieId=" + categorieId;
+        }
+        if (contient != null && !contient.isBlank()) {
+            baseParams += (baseParams.isEmpty() ? "?" : "&") + "contient=" + contient;
+        }
+
+        model.addAttribute("urlType0", "/" + baseParams);
+        model.addAttribute("urlType1", "/mes-encheres-en-cours" + baseParams);
+        model.addAttribute("urlType2", "/mes-encheres-remportees" + baseParams);
+
+
+        model.addAttribute("isAchat", true);
+        displayArticle(true, categorieId, contient, typeEnchere, session, model);
+        return "index";
+    }
+
+    @GetMapping({ "/mes-ventes-en-cours", "/mes-ventes-non-debutees", "/mes-ventes-terminees"})
+    public String ventes(
+            HttpServletRequest request,
+            HttpSession session,
+            Model model,
+            @RequestParam(value = "categorieId", required = false) Integer categorieId,
+            @RequestParam(value = "contient", required = false) String contient) {
+
+        String path = request.getServletPath();
+        int typeEnchere = switch (path) {
+            case "/mes-ventes-non-debutees" -> 1;
+            case "/mes-ventes-terminees" -> 2;
+            default -> 0;
+        };
+
+        String currentPath = request.getServletPath();
+        model.addAttribute("formActionUrl", currentPath);
+
+        String baseParams = "";
+        if (categorieId != null) {
+            baseParams += "?categorieId=" + categorieId;
+        }
+        if (contient != null && !contient.isBlank()) {
+            baseParams += (baseParams.isEmpty() ? "?" : "&") + "contient=" + contient;
+        }
+
+        model.addAttribute("urlType0", "/mes-ventes-en-cours" + baseParams);
+        model.addAttribute("urlType1", "/mes-ventes-non-debutees" + baseParams);
+        model.addAttribute("urlType2", "/mes-ventes-terminees" + baseParams);
+
+
+        displayArticle(false,categorieId, contient, typeEnchere, session, model);
+
+        model.addAttribute("isAchat", false);
+        return "index";
+    }
+
+
+    private void displayArticle(boolean achat,
+                                Integer categorieId,
+                                String contient,
+                                Integer typeEnchere,
                                 HttpSession session,
-                                Model model) {
+                                Model model ) {
 
         List<Categorie> categories = categorieService.getAllCategories();
+        //System.out.println("categories = " + categories);
         model.addAttribute("categories", categories);
 
-        List<ArticleAVendre> articles;
-
         if (categorieId != null) {
-//            articles = articleService.findByCategorieId( categorieId);
             model.addAttribute("selectedCategorieId", categorieId);
-//            System.out.println("categorieId is not null find by date and id all");
-
-        } else {
-//            System.out.println("categorieId is null find all");
-//            articles = articleService.findAll();
         }
 
         Utilisateur user = (Utilisateur)  session.getAttribute("userInSession");
-
         String pseudo = (user != null) ? user.getPseudo() : "";
 
-        typeEnchere = (typeEnchere != null ) ? typeEnchere : 0;
-
-        articles = articleService.find( categorieId, contient, typeEnchere, pseudo );
+        List<ArticleAVendre> articles = articleService.find( achat, categorieId, contient, typeEnchere, pseudo );
 
         model.addAttribute("typeEnchere", typeEnchere);
         model.addAttribute("contient", contient);
@@ -76,40 +141,7 @@ public class HomeController {
         articles = ArticleChainFilter.contains(articles, contient );
 
         model.addAttribute("articles", articles);
-        model.addAttribute("isAchat", true);
-        return "index";
     }
-
-
-
-    @GetMapping("/encheres")
-    public String afficherEncheres(@RequestParam(value = "categorieId", required = false) Integer categorieId,
-                                @RequestParam(value = "contient", required = false) String contient,
-                                @RequestParam(value = "typeEnchere", required = false) Integer typeEnchere,
-                                Model model) {
-
-        List<Categorie> categories = categorieService.getAllCategories();
-        model.addAttribute("categories", categories);
-
-        List<ArticleAVendre> articles;
-
-        if (categorieId != null) {
-            articles = articleService.findByCategorieId( categorieId);
-            model.addAttribute("selectedCategorieId", categorieId);
-        } else {
-            articles = articleService.findAll();
-        }
-
-        model.addAttribute("typeEnchere", 0);
-
-
-        articles = ArticleChainFilter.contains(articles, contient );
-
-        model.addAttribute("articles", articles);
-        model.addAttribute("isAchat", true);
-        return "index";
-    }
-
 
 
 }

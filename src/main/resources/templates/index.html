@@ -17,9 +17,7 @@
 		<div class="content">
 			<h2 data-th-text="#{index.h2}"></h2>
 			<div class="center">
-				<form class="filterForm" method="get" th:action="@{/}">
-
-
+				<form class="filterForm" method="get" th:action="@{${formActionUrl}}">
 <!--					<input class="rightStraight" id="contient" name="contient" th:value="${contient}" th:placeholder="${contient} ?: #{index.nomContient}" />-->
 					<input class="rightStraight" id="contient" name="contient" th:value="${contient}" th:placeholder="${contient} ?: #{index.nomContient}" />
 
@@ -37,38 +35,64 @@
 						<img class="search" th:src="@{/images/search.svg}" alt="Rechercher" />
 					</button>
 
-					<button class="btnIcon hidden" type="button" id="resetBtn">
-						<img id="resetBtnImg" class="close hidden" th:src="@{/images/close.svg}" alt="Réinitialiser" />
+					<button class="btnIcon" type="button" id="resetBtn"
+							th:classappend="${(selectedCategorieId == null and (contient == null or contient == '') )} ? ' hidden' : ''">
+						<img id="resetBtnImg" class="close" th:src="@{/images/close.svg}" alt="Réinitialiser" />
 					</button>
+<!--					<button class="btnIcon hidden" type="button" id="resetBtn">-->
+<!--						<img id="resetBtnImg" class="close hidden" th:src="@{/images/close.svg}" alt="Réinitialiser" />-->
+<!--					</button>-->
 				</form>
 			</div>
 
 			<div sec:authorize="isAuthenticated()" class="btnsAchatVente">
 				<div class="colSelectIndex">
-				<a th:if="${!isAchat}" class="btnAchatVente" th:href="@{/encheres}" th:text="#{index.achats}"></a>
-				<span th:if="${isAchat}" class="btnAchatVente" th:text="#{index.achats}"></span>
+					<a th:if="${!isAchat}" class="btnAchatVente inactive" th:href="@{/}" th:text="#{index.achats}"></a>
+					<span th:if="${isAchat}" class="btnAchatVente" th:text="#{index.achats}"></span>
 
+					<select th:if="${isAchat}" id="typeEnchere"
+							th:attr="onchange=|window.location.href=this.value|">
 
-					<select name="typeEnchere" id="typeEnchere"
-							th:attr="onchange=|window.location.href='@{/}?typeEnchere=' + this.value
-                + (${selectedCategorieId != null} ? '&categorieId=' + ${selectedCategorieId} : '')
-                + (${contient != null} ? '&contient=' + ${contient} : '')|">
+						<option th:value="${urlType0}"
+								th:selected="${typeEnchere == 0}"
+								th:text="#{index.typeEnchere.ouverte}"></option>
 
-						<option value="0" th:selected="${typeEnchere != null && typeEnchere == 0}" th:text="#{index.typeEnchere.ouverte}"></option>
-						<option value="1" th:selected="${typeEnchere != null && typeEnchere == 1}" th:text="#{index.typeEnchere.enCours}"></option>
-						<option value="2" th:selected="${typeEnchere != null && typeEnchere == 2}" th:text="#{index.typeEnchere.remportees}"></option>
+						<option th:value="${urlType1}"
+								th:selected="${typeEnchere == 1}"
+								th:text="#{index.typeEnchere.enCours}"></option>
+
+						<option th:value="${urlType2}"
+								th:selected="${typeEnchere == 2}"
+								th:text="#{index.typeEnchere.remportees}"></option>
 					</select>
 
 				</div>
+				<div class="colSelectIndex">
+					<a th:if="${isAchat}" class="btnAchatVente inactive"  href="/mes-ventes-en-cours" th:text="#{index.mesVentes}"></a>
+					<span th:if="${!isAchat}" class="btnAchatVente"  th:text="#{index.mesVentes}"></span>
 
+					<select th:if="${!isAchat}" id="typeEnchere"
+							th:attr="onchange=|window.location.href=this.value|">
 
-				<a class="btnAchatVente inactive"  href="articles/ventes" th:text="#{index.mesVentes}"></a>
+						<option th:value="${urlType0}"
+								th:selected="${typeEnchere == 0}"
+								th:text="#{index.typeEnchere.ventes}"></option>
+
+						<option th:value="${urlType1}"
+								th:selected="${typeEnchere == 1}"
+								th:text="#{index.typeEnchere.nonDebute}"></option>
+
+						<option th:value="${urlType2}"
+								th:selected="${typeEnchere == 2}"
+								th:text="#{index.typeEnchere.venteTermine}"></option>
+					</select>
+				</div>
 			</div>
 
 			<section>
 				<ul class="articleContainer">
 					<li class="articleCards" data-th-each="article : ${articles}">
-						<h3 data-th-text="${article.nom }"></h3>
+						<h3><a data-th-href="@{/article/(id=${article.id})}" data-th-text="${article.nom }"></a></h3>
 <!--						<p th:text="#{article.dateDebut} + ' ' +${article.prixVente != null ? article.prixVente : article.prixInitial}"></p>-->
 
 						<p data-th-text="#{article.dateFin} + ' ' +${@dateUtil.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></p>
