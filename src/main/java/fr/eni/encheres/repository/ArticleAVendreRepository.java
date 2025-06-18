@@ -1,6 +1,7 @@
 package fr.eni.encheres.repository;
 
 import fr.eni.encheres.model.ArticleAVendre;
+import fr.eni.encheres.model.Categorie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,6 +22,55 @@ public interface ArticleAVendreRepository extends JpaRepository<ArticleAVendre, 
     @Query("SELECT a FROM ArticleAVendre a WHERE :now BETWEEN a.dateDebutEncheres AND a.dateFinEncheres ORDER BY a.dateFinEncheres ASC")
     List<ArticleAVendre> findEncheresEnCours(@Param("now") LocalDate now);
 
+    @Query("""
+    SELECT a FROM ArticleAVendre a 
+        WHERE a.categorie.id = :categorieId
+        AND :now BETWEEN a.dateDebutEncheres AND a.dateFinEncheres ORDER BY a.dateFinEncheres ASC
+    """)
+    List<ArticleAVendre> findEncheresEnCoursByCategorie(@Param("now") LocalDate now, @Param("categorieId") Integer categorieId );
 
 
+    @Query("""
+    SELECT DISTINCT e.articleAVendre
+    FROM Enchere e
+    WHERE e.encherisseur.pseudo = :pseudo
+      AND CURRENT_DATE BETWEEN e.articleAVendre.dateDebutEncheres AND e.articleAVendre.dateFinEncheres
+""")
+    List<ArticleAVendre> findArticlesEnCoursEncherisPar(@Param("pseudo") String pseudo);
+
+    @Query("""
+    SELECT DISTINCT e.articleAVendre
+    FROM Enchere e
+    WHERE e.encherisseur.pseudo = :pseudo
+      AND e.articleAVendre.categorie.id = :categorieId
+      AND CURRENT_DATE BETWEEN e.articleAVendre.dateDebutEncheres AND e.articleAVendre.dateFinEncheres
+""")
+    List<ArticleAVendre> findArticlesEnCoursEncherisParEtCategorie(@Param("pseudo") String pseudo, @Param("categorieId") Integer categorieId);
+
+
+
+    @Query("""
+    SELECT e.articleAVendre FROM Enchere e
+    WHERE e.encherisseur.pseudo = :pseudo
+    AND e.montant = (
+        SELECT MAX(e2.montant) FROM Enchere e2
+        WHERE e2.articleAVendre.id = e.articleAVendre.id
+    )
+    AND e.articleAVendre.dateFinEncheres < :now
+""")
+    List<ArticleAVendre> findArticlesRemportesByPseudo(@Param("pseudo") String pseudo, @Param("now") LocalDate now);
+
+
+    @Query("""
+    SELECT e.articleAVendre FROM Enchere e
+    WHERE e.encherisseur.pseudo = :pseudo
+    AND e.montant = (
+        SELECT MAX(e2.montant) FROM Enchere e2
+        WHERE e2.articleAVendre.id = e.articleAVendre.id
+    )
+    AND e.articleAVendre.dateFinEncheres < :now
+""")
+    List<ArticleAVendre> findArticlesRemportesByPseudoAndCategorie(@Param("pseudo") String pseudo, @Param("now") LocalDate now, @Param("categorieId") Integer categorieId);
+
+    List<ArticleAVendre> findEncheresEnCoursByCategorie(Categorie categorie);
 }

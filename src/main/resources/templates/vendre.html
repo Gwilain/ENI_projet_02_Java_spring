@@ -14,7 +14,7 @@
 
 <body>
 	<main>
-		<form th:object="${articleAVendre}">
+		<form th:object="${articleAVendre}" th:action="@{/vendre}" method="post">
 			<div class="form-group">
 				<div>
 					<label for="article">
@@ -30,7 +30,7 @@
 					<span th:text="#{article.prix}"></span>
 					<span class="asterix">*</span>
 				</label>
-				<input id="prix" name="prix" type="number" step="1" th:field="*{prixInitial}" required/>
+				<input id="prix" name="prix" type="number" step="1" th:field="*{prixInitial}" value="1" required/>
 			</div>
 
 			<div>
@@ -64,7 +64,7 @@
 						<span th:text="#{vente.description}"></span>
 						<span class="asterix">*</span>
 					</label>
-					<textarea id="description" name="description" ></textarea>
+					<textarea id="description" name="description" th:field="*{description}" required></textarea>
 				</div>
 				<div>
 					<label for="dateDebut">
@@ -94,9 +94,9 @@
 					</optgroup>
 				</select>
 			</div>
-
+			<button th:text="#{ vente.annuler }"></button>
+			<button th:action="submit" th:text="#{ vente.vendre }"></button>
 		</form>
 	</main>
 </body>
-
 </html>

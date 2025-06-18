@@ -10,11 +10,22 @@ import java.util.List;
 @Service
 public class CategorieService {
 
-    @Autowired
-    private CategorieRepository categorieRepository;
+    private final List<Categorie> categories;
 
-        public List<Categorie> findAll() {
+    public CategorieService(CategorieRepository categoryRepository) {
 
-        return categorieRepository.findAll();
-    };
+        this.categories = categoryRepository.findAll();
+    }
+
+    public List<Categorie> getAllCategories() {
+        return categories;
+    }
+
+//    @Autowired
+//    private CategorieRepository categorieRepository;
+//
+//        public List<Categorie> findAll() {
+//
+//        return categorieRepository.findAll();
+//    };
 }

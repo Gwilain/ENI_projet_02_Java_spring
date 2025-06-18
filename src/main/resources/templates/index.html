@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr"
 	  th:replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title}, contenuPage=~{:: main}, ressourcesSupp=~{:: js-filtre}, scriptsJs=~{:: js-filtre})}"
-	  xmlns:th="http://www.thymeleaf.org">
+	  xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
 
 <head>
@@ -16,32 +16,54 @@
 	<main>
 		<div class="content">
 			<h2 data-th-text="#{index.h2}"></h2>
+			<div class="center">
+				<form class="filterForm" method="get" th:action="@{/}">
 
-			<form class="filterForm" method="get" th:action="@{/}">
 
-				<span th:text="#{index.filtres}"></span>
+<!--					<input class="rightStraight" id="contient" name="contient" th:value="${contient}" th:placeholder="${contient} ?: #{index.nomContient}" />-->
+					<input class="rightStraight" id="contient" name="contient" th:value="${contient}" th:placeholder="${contient} ?: #{index.nomContient}" />
 
-				<input id="contient" name="contient" th:value="${contient}" th:placeholder="#{index.nomContient}" />
 
-				<select name="categorieId" id="categorie">
-					<option value="" th:selected="${selectedCategorieId == null}" data-th-text="#{index.toutesCat}"></option>
-					<option th:each="cat : ${categories}"
-							th:value="${cat.id}"
-							th:text="${cat.libelle}"
-							th:selected="${cat.id == selectedCategorieId}">
-					</option>
+					<select class="leftStraight" name="categorieId" id="categorie">
+						<option value="" th:selected="${selectedCategorieId == null}" data-th-text="#{index.toutesCat}"></option>
+						<option th:each="cat : ${categories}"
+								th:value="${cat.id}"
+								th:text="${cat.libelle}"
+								th:selected="${cat.id == selectedCategorieId}">
+						</option>
+					</select>
 
-				</select>
+					<button class="btnIcon" type="submit">
+						<img class="search" th:src="@{/images/search.svg}" alt="Rechercher" />
+					</button>
 
-				<button class="btnIcon" type="submit">
-					<img class="search" th:src="@{/images/search.svg}" alt="Rechercher" />
-				</button>
+					<button class="btnIcon hidden" type="button" id="resetBtn">
+						<img id="resetBtnImg" class="close hidden" th:src="@{/images/close.svg}" alt="Réinitialiser" />
+					</button>
+				</form>
+			</div>
 
-				<button class="btnIcon" type="button" id="resetBtn">
-					<img class="close" th:src="@{/images/close.svg}" alt="Réinitialiser" />
-				</button>
+			<div sec:authorize="isAuthenticated()" class="btnsAchatVente">
+				<div class="colSelectIndex">
+				<a th:if="${!isAchat}" class="btnAchatVente" th:href="@{/encheres}" th:text="#{index.achats}"></a>
+				<span th:if="${isAchat}" class="btnAchatVente" th:text="#{index.achats}"></span>
 
-			</form>
+
+					<select name="typeEnchere" id="typeEnchere"
+							th:attr="onchange=|window.location.href='@{/}?typeEnchere=' + this.value
+                + (${selectedCategorieId != null} ? '&categorieId=' + ${selectedCategorieId} : '')
+                + (${contient != null} ? '&contient=' + ${contient} : '')|">
+
+						<option value="0" th:selected="${typeEnchere != null && typeEnchere == 0}" th:text="#{index.typeEnchere.ouverte}"></option>
+						<option value="1" th:selected="${typeEnchere != null && typeEnchere == 1}" th:text="#{index.typeEnchere.enCours}"></option>
+						<option value="2" th:selected="${typeEnchere != null && typeEnchere == 2}" th:text="#{index.typeEnchere.remportees}"></option>
+					</select>
+
+				</div>
+
+
+				<a class="btnAchatVente inactive"  href="articles/ventes" th:text="#{index.mesVentes}"></a>
+			</div>
 
 			<section>
 				<ul class="articleContainer">

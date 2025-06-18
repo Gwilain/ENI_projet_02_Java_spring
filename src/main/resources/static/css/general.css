@@ -104,24 +104,31 @@ footer {
     height: auto;
 }
 
+.center{
+    display: flex;
+}
+
 .filterForm{
     padding-left: 1rem;
     margin-bottom: 1rem;
     display: flex;
-    gap: 1rem;
+    /*gap: 1rem;*/
+    /*justify-content: space-around;*/
     /*align-content: center;*/
     align-items: center;
     /*background-color: greenyellow;*/
+    margin: 0 auto 1rem auto;
+    /*width: 50%;*/
+    /*text-align: center;*/
 }
 
-.search{
+.search, .close{
     width: 50px;
     height: 50px;
 }
 
 .btnIcon{
-    width: 50px;
-    height: 50px;
+    margin-left: 1rem;
     background: none;
     border: none;
     padding: 0;
@@ -132,8 +139,52 @@ input, select{
     padding: 0.7rem 1.2rem;
     border-radius: 3rem;
     border: solid 1px #bfbfbf;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 1px 2px 3px rgba(0, 0, 0, 0.4);
     background-color: white;
+    /*margin: 0 1rem;*/
+}
+
+.rightStraight{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-right: 0.1rem;
+}
+
+.leftStraight{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: 0.1rem;
+}
+
+.btnsAchatVente{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1.5rem;
+}
+
+.btnAchatVente{
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: black;
+    padding: 1rem 10rem;
+    border-radius: 1rem;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.inactive{
+    color: #818181;
+}
+
+.colSelectIndex{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .articleContainer{
@@ -158,6 +209,11 @@ input, select{
     margin-bottom: 0.5rem;
     box-shadow: 0 0.6rem 1rem rgba(0, 0, 0, 0.35);
     transition: 0.5s;
+}
+
+.hidden {
+    visibility: hidden;
+    pointer-events: none;
 }
 
 /*

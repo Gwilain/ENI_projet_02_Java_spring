@@ -1,27 +1,75 @@
-document.addEventListener('DOMContentLoaded', initSearch);
+let initialized = false;
 
-function initSearch() {
+function init() {
+    console.log("init js");
+    if (initialized) {
+        console.warn("init() déjà appelé, on skip");
+        return;
+    }
+    initialized = true;
 
-    console.log("initSearch")
-
+    console.log("init js lancé UNE fois");
+    const form = document.getElementById('filterForm');
     const resetBtn = document.getElementById('resetBtn');
-    if (!resetBtn) return;
+    const resetBtnImg = document.getElementById('resetBtnImg');
+    const champContient = document.getElementById('contient');
+    const champCategorie = document.getElementById('categorie');
 
-    const form = resetBtn.closest('form');
-    if (!form) return;
 
-    resetBtn.addEventListener('click', handleResetClick);
+    console.log("resetBtn", resetBtn);
+    // Affiche ou cache le bouton reset selon l'état des champs
+    function checkFilters() {
+        const contientHasValue = champContient && champContient.value.trim() !== '';
+        const categorieHasValue = champCategorie && champCategorie.value.trim() !== '';
+
+        console.log("checkFilters → contient:", champContient.value, "| categorie:", champCategorie.value);
+
+        if (contientHasValue || categorieHasValue) {
+            resetBtnImg.classList.remove('hidden');
+            resetBtn.classList.remove('hidden');
+            console.log("remove hidden");
+        } else {
+            resetBtnImg.classList.add('hidden');
+            resetBtn.classList.add('hidden');
+            console.log("add hidden")
+        }
+    }
+
+    // À l'initialisation : vérifier l'état des champs
+    checkFilters();
+
+    // Écouteurs pour mise à jour en temps réel
+    champContient?.addEventListener('input', checkFilters);
+    champCategorie?.addEventListener('change', checkFilters);
+
+    // Clic sur le bouton reset = redirection propre
+    resetBtn.addEventListener('click', function () {
+        const typeEnchere = document.getElementById('typeEnchere')?.value || '0';
+
+        // On recharge la page avec uniquement typeEnchere
+        window.location.href = `${window.location.pathname}?typeEnchere=${typeEnchere}`;
+        // console.log("click on reset");
+        //
+        // const baseUrl = window.location.origin + window.location.pathname;
+        // window.location.href = baseUrl; // recharge sans les paramètres
+    });
+
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const typeEnchere = document.getElementById('typeEnchere')?.value;
+        const url = new URL(window.location.href);
+        const formData = new FormData(form);
+        const params = new URLSearchParams(formData);
+
+        if (typeEnchere) {
+            params.set('typeEnchere', typeEnchere);
+        }
+
+        // Redirige avec les bons paramètres
+        window.location.href = window.location.pathname + '?' + params.toString();
+    });
 }
 
-function handleResetClick(event) {
-    const form = event.currentTarget.closest('form');
-    if (!form) return;
-
-    const input = form.querySelector('#contient');
-    const select = form.querySelector('#categorie');
-
-    if (input) input.value = '';
-    if (select) select.selectedIndex = 0;
-
-    form.submit();
-}
+document.addEventListener('DOMContentLoaded', init);

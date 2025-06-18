@@ -39,7 +39,6 @@ public class ArticleAVendre {
     @Column(name = "prix_vente")
     private Integer prixVente;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_utilisateur", nullable = false)
     private Utilisateur vendeur;
