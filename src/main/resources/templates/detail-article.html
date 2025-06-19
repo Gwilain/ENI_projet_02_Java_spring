@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr"
 	  th:replace="~{layouts/layout :: layout-enchere(titrePage=~{:: title}, contenuPage=~{:: main}, ressourcesSupp=~{}, scriptsJs=~{})}"
-	  xmlns:th="http://www.thymeleaf.org">
+	  xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
 
 <head>
@@ -15,12 +15,73 @@
 		<section>
 			<h1  data-th-text="#{articleDetail.titre}"></h1>
 			<div class="profiLine">
-				<span data-th-text="${user.prenom}"></span>
+				<div>
+					<span data-th-text="#{vente.article}"></span>
+					<span data-th-text="${article.nom}"></span>
+				</div>
+				<div>
+					<span data-th-text="#{vente.miseAPrix}"></span>
+					<span data-th-text="${article.prixInitial}"></span>
+				</div>
 			</div>
 
+			<div class="profiLine">
+				<div>
+					<span data-th-text="#{vente.categorie}"></span>
+					<span data-th-text="${article.nomCategorie}"></span>
+				</div>
+				<div>
+					<span data-th-text="#{vente.prix}"></span>
+<!--					<span data-th-text="${article.prixActuel}"></span>-->
+					<span th:if="${article.prixActuel != null}" th:text="${article.prixActuel} + #{points}"></span>
 
-<!--			<a th:if="${isCUserProfil}" th:href="@{/utilisateur/modifier-profil}" data-th-text="#{profil.btnModfier}"></a>-->
-<!--			<a th:if="${!isCUserProfil}" href="javascript:history.back()" data-th-text="#{profil.btnRetour}"></a>-->
+					<span th:if="${article.prixActuel == null}" th:text="#{vente.pasEncoreOffre}"></span>
+				</div>
+			</div>
+
+			<div class="profiLine">
+				<div>
+					<span data-th-text="#{vente.description}"></span>
+					<span data-th-text="${article.description}"></span>
+				</div>
+				<div>
+					<span data-th-text="#{vente.dateFin}"></span>
+					<span data-th-text="${article.dateFin}"></span>
+				</div>
+			</div>
+			<div>
+				<span data-th-text="#{vente.retrait}"></span>
+				<span data-th-text="${article.adresseRetrait}"></span>
+			</div>
+			<div>
+				<span data-th-text="#{vente.vendeur}"></span>
+				<span data-th-text="${article.pseudoVendeur}"></span>
+			</div>
+			<div sec:authorize="isAuthenticated()"  th:if="${!article.modifiable }" >
+
+				<form th:object="${enchere}" th:action="@{/detail-article}" method="post">
+<!--				<form th:object="${enchere}" th:action="@{/encherir}" method="post">-->
+<!--					<input type="hidden" th:field="*{idArticle}" th:value="${article.id}"  />-->
+					<label th:text="#{vente.monEnchere}"></label>
+<!--					<input type="hidden" th:field="*{idArticle}" th:value="${article.id}" />-->
+
+					<p th:text="${article.id}"></p>
+					<input type="number"
+						   th:field="*{montant}"
+						   th:min="${article.prixActuel}"
+						   th:value="${article.prixActuel}"
+						   step="1"
+						    />
+
+					<input type="hidden" th:field="*{idArticle}" />
+
+					<button type="submit" th:text="#{vente.encherir}"></button>
+				</form>
+			</div>
+
+			<a href="javascript:history.back()" th:text="#{vente.retour}"></a>
+
+			<a th:if="${article.modifiable }" th:href="@{vendre(id=${ article.id })}" th:text="#{vente.modifier}"></a>
 
 		</section>
 	</main>

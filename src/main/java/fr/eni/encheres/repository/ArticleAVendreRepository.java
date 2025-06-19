@@ -125,4 +125,5 @@ public interface ArticleAVendreRepository extends JpaRepository<ArticleAVendre, 
     List<ArticleAVendre> findVentesTermineesByPseudoAndCategorie(@Param("pseudo") String pseudo, @Param("categorieId") Integer categorieId, @Param("now") LocalDate now);
 
 
+    ArticleAVendre getArticleAVendreById(Integer id);
 }

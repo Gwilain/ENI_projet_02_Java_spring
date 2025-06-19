@@ -93,9 +93,20 @@
 						</option>
 					</optgroup>
 				</select>
+				<input type="hidden" th:field="*{id}" />
 			</div>
-			<button th:text="#{ vente.annuler }"></button>
-			<button th:action="submit" th:text="#{ vente.vendre }"></button>
+
+			<button href="javascript:history.back()" th:text="#{ vente.annuler }"></button>
+
+
+
+			<button type="submit" name="action" value="annuler" th:text="#{vente.annulerVente}"></button>
+
+			<button th:if="${isModif}" type="submit"  th:text="#{ vente.vendre }"></button>
+			<button th:if="${!isModif}" type="submit" th:text="#{ vente.modifier }"></button>
+
+
+
 		</form>
 	</main>
 </body>

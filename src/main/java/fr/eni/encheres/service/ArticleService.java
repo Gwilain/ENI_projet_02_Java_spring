@@ -47,6 +47,19 @@ public class ArticleService {
         articleAVendreRepository.save(article);
     }
 
+    public void deleterArticle(int id, String userPseudo ) {
+
+        ArticleAVendre article = articleAVendreRepository.findById( (long) id)
+                .orElseThrow(() -> new IllegalArgumentException("Article non trouvé"));
+
+        if (!article.getVendeur().getPseudo().equals(userPseudo)) {
+            throw new SecurityException("Suppression non autorisée");
+        }
+
+        articleAVendreRepository.deleteById( (long) id);
+    }
+
+
     public List<ArticleAVendre> find( Boolean achats, Integer categorieId, String contient, Integer typeEnchere, String pseudo){
 
         List<ArticleAVendre> articles = new ArrayList<>();
@@ -135,6 +148,13 @@ public class ArticleService {
     }
 
 
+    public  VenteFormDTO getArticle(int id){
+
+        VenteFormDTO dto = toDto( articleAVendreRepository.getArticleAVendreById(id) );
+
+        return dto;
+    }
+
     public ArticleAVendre fromDto(VenteFormDTO dto, Utilisateur vendeur) {
 
         Categorie categorie = categorieRepository.findById(dto.getCategorieId())
@@ -143,6 +163,10 @@ public class ArticleService {
                 .orElseThrow(() -> new IllegalArgumentException("Adresse non trouvée"));
 
         ArticleAVendre article = new ArticleAVendre();
+        if ( dto.getId() > 0) {
+            article.setId(dto.getId());
+        }
+
         article.setNom(dto.getNom());
         article.setDescription(dto.getDescription());
         article.setPhoto(dto.getPhoto());
@@ -160,6 +184,8 @@ public class ArticleService {
 
     public VenteFormDTO toDto(ArticleAVendre article) {
         VenteFormDTO dto = new VenteFormDTO();
+
+        dto.setId(article.getId());
 
         dto.setNom(article.getNom());
         dto.setDescription(article.getDescription());

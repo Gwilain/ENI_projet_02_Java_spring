@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Data
 public class ArticleDetailDTO {
 
+    private int id;
     private String nom;
     private String description;
     private String photoUrl;
@@ -22,4 +23,6 @@ public class ArticleDetailDTO {
     private String pseudoVendeur;
     private String nomCategorie;
     private String adresseRetrait;
+    private boolean modifiable;
+
 }

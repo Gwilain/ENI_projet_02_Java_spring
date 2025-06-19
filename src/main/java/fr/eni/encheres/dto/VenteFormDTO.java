@@ -12,6 +12,9 @@ import java.time.LocalDate;
 @Data
 public class VenteFormDTO {
 
+    private int id;
+
+
     @NotBlank(message = "Le nom de l'article est obligatoire")
     @Size(max = 30)
     private String nom;

@@ -16,12 +16,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Controller
 public class VendreController {
+
     @Autowired
     private ArticleService articleService;
 
@@ -34,14 +36,26 @@ public class VendreController {
 
 
     @GetMapping("/vendre")
-    public String vendre(HttpSession session, Model model) {
+    public String vendre(@RequestParam(value = "id", required = false) Integer id,
+                         HttpSession session,
+                         Model model) {
 
-        VenteFormDTO form = new VenteFormDTO();
-        form.setDateDebut(LocalDate.now());
-        form.setDateFin(LocalDate.now().plusDays(30));
+        VenteFormDTO form;
+
+        if(id != null && id >= 0) {
+
+            form =  articleService.getArticle(id);
+            model.addAttribute( "selectedCategorieId", form.getCategorieId());
+            model.addAttribute( "isModif", true );
+        }else{
+
+            form = new VenteFormDTO();
+            form.setDateDebut(LocalDate.now());
+            form.setDateFin(LocalDate.now().plusDays(30));
+            model.addAttribute( "isModif", false );
+        }
 
         model.addAttribute("articleAVendre", form);
-
 
         List<Categorie> categories = categorieService.getAllCategories();
 
@@ -60,7 +74,9 @@ public class VendreController {
 
 
     @PostMapping("/vendre")
-    public String miseEnVente(@Valid @ModelAttribute VenteFormDTO form, HttpSession session,
+    public String miseEnVente(@Valid @ModelAttribute VenteFormDTO form,
+                              @RequestParam String action,
+                              HttpSession session,
                               BindingResult bindingResult,
                               Model model) {
 
@@ -70,6 +86,14 @@ public class VendreController {
             return "vendre";
         }
         Utilisateur user = (Utilisateur)  session.getAttribute("userInSession");
+
+        if ("annuler".equals(action)) {
+
+            articleService.deleterArticle(form.getId(), user.getPseudo());
+
+            return "redirect:/mes-ventes-non-debutees";
+        }
+
         articleService.registerVente(form, user);
 
         return "redirect:/";

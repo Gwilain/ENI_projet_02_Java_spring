@@ -68,7 +68,7 @@
 
 				</div>
 				<div class="colSelectIndex">
-					<a th:if="${isAchat}" class="btnAchatVente inactive"  href="/mes-ventes-en-cours" th:text="#{index.mesVentes}"></a>
+					<a th:if="${isAchat}" class="btnAchatVente inactive"  th:href="@{/mes-ventes-en-cours}" th:text="#{index.mesVentes}"></a>
 					<span th:if="${!isAchat}" class="btnAchatVente"  th:text="#{index.mesVentes}"></span>
 
 					<select th:if="${!isAchat}" id="typeEnchere"
@@ -92,11 +92,12 @@
 			<section>
 				<ul class="articleContainer">
 					<li class="articleCards" data-th-each="article : ${articles}">
-						<h3><a data-th-href="@{/article/(id=${article.id})}" data-th-text="${article.nom }"></a></h3>
-<!--						<p th:text="#{article.dateDebut} + ' ' +${article.prixVente != null ? article.prixVente : article.prixInitial}"></p>-->
+						<h3><a data-th-href="@{/detail-article(id=${article.id})}" data-th-text="${article.nom }"></a></h3>
 
-						<p data-th-text="#{article.dateFin} + ' ' +${@dateUtil.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></p>
-						<span data-th-text="#{article.vendeur}"></span><a th:href="@{/utilisateur/profil(pseudo=${article.vendeur.pseudo})}" data-th-text="${article.vendeur.pseudo}"></a>
+						<p th:text="#{article.prix} + ' ' +${article.prixVente != null ? article.prixVente : article.prixInitial}"></p>
+
+						<p data-th-text="#{ article.dateDebut } + ' ' +${@dateUtil.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></p>
+						<span data-th-text="#{ article.vendeur }"></span><a th:href="@{/utilisateur/profil(pseudo=${article.vendeur.pseudo})}" data-th-text="${article.vendeur.pseudo}"></a>
 
 					</li>
 				</ul>
