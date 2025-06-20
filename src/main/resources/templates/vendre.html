@@ -14,100 +14,116 @@
 
 <body>
 	<main>
-		<form th:object="${articleAVendre}" th:action="@{/vendre}" method="post">
-			<div class="form-group">
-				<div>
-					<label for="article">
-						<span th:text="#{vente.article}"></span>
+		<div class="content">
+			<form th:class="subContent" th:object="${articleAVendre}" th:action="@{/vendre}" method="post"  enctype="multipart/form-data">
+		<h2 th:text="#{vente.h1}" ></h2>
+
+					<div class="flexLine" th:class="bold">
+						<label for="article">
+							<span th:text="#{vente.article}"></span>
+							<span class="asterix">*</span>
+							<span> : </span>
+						</label>
+						<input id="article" name="article" th:field="*{nom}" required/>
+					</div>
+
+				<div class="flexLine">
+
+					<label for="prix">
+						<span th:text="#{article.prix}"></span>
 						<span class="asterix">*</span>
 					</label>
-					<input id="article" name="article" th:field="*{nom}" required/>
-				</div>
-			</div>
-
-			<div>
-				<label for="prix">
-					<span th:text="#{article.prix}"></span>
-					<span class="asterix">*</span>
-				</label>
-				<input id="prix" name="prix" type="number" step="1" th:field="*{prixInitial}" value="1" required/>
-			</div>
-
-			<div>
-				<div>
-					<label for="categorie">
-						<span th:text="#{vente.categorie}"></span>
-						<span class="asterix">*</span>
-					</label>
-					<select name="categorieId" id="categorie">
-						<option value="" th:selected="${selectedCategorieId == null}" data-th-text="#{index.toutesCat}"></option>
-						<option th:each="cat : ${categories}"
-								th:value="${cat.id}"
-								th:text="${cat.libelle}"
-								th:selected="${cat.id == selectedCategorieId}">
-						</option>
-					</select>
+					<input id="prix" name="prix" type="number" step="1" placeholder="0" th:field="*{prixInitial}" pattern="[0-9]*" value="1" required/>
 				</div>
 
-				<div>
-					<label for="dateDebut">
-						<span th:text="#{vente.dateDebut}"></span>
-						<span class="asterix">*</span>
-					</label>
-					<input id="dateDebut" name="dateDebut" type="date" th:field="*{dateDebut}" required />
-				</div>
-			</div>
+				<div class="flexLine">
 
-			<div>
-				<div>
-					<label for="description">
-						<span th:text="#{vente.description}"></span>
-						<span class="asterix">*</span>
-					</label>
-					<textarea id="description" name="description" th:field="*{description}" required></textarea>
+						<label for="categorie">
+							<span th:text="#{vente.categorie}"></span>
+							<span class="asterix">*</span>
+						</label>
+						<select name="categorieId" id="categorie">
+							<option value="" th:selected="${selectedCategorieId == null}" data-th-text="#{index.toutesCat}"></option>
+							<option th:each="cat : ${categories}"
+									th:value="${cat.id}"
+									th:text="${cat.libelle}"
+									th:selected="${cat.id == selectedCategorieId}">
+							</option>
+						</select>
 				</div>
-				<div>
-					<label for="dateDebut">
+
+				<div class="flexLine">
+
+						<label class="labelShMargin" for="dateDebut">
+							<span th:text="#{vente.dateDebut}"></span>
+							<span class="asterix">*</span>
+							<span > :</span>
+						</label>
+						<input id="dateDebut" name="dateDebut" type="date" th:field="*{dateDebut}" required />
+
+				</div>
+				<div class="flexLine">
+					<label class="labelShMargin" for="dateDebut">
 						<span th:text="#{vente.dateFin}"></span>
 						<span class="asterix">*</span>
+						<span > :</span>
 					</label>
 					<input id="dateFin" name="dateFin" type="date" th:field="*{dateFin}" required />
 				</div>
-			</div>
-			<div>
-				<label for="adresseRetrait">
-					<span th:text="#{vente.retrait}"></span>
-					<span class="asterix">*</span>
-				</label>
-				<select id="adresseRetrait" name="adresseRetraitId" th:field="*{adresseRetraitId}" required>
-					<!-- Adresse du vendeur -->
-					<option th:value="${adresseVendeur.id}"
-							th:text="'Adresse personnelle : ' + ${adresseVendeur.affichageComplet()}">
-					</option>
 
-					<!-- Adresses ENI -->
-					<optgroup label="Points de retrait ENI">
-						<option th:each="adresse : ${adressesEni}"
-								th:value="${adresse.id}"
-								th:text="${adresse.affichageComplet()}">
+				<div>
+						<label for="description">
+							<span th:text="#{vente.description}"></span>
+							<span class="asterix">*</span>
+							<span> :</span>
+						</label><br>
+						<textarea id="description" class="w100" name="description" rows="5" th:field="*{description}" required></textarea>
+				</div>
+				<div class="flexLine">
+
+					<span th:text="#{vente.photo}"></span>
+					<span style="font-style:italic;color: grey" th:text="#{bientotDispo}"></span>
+					<!--					<input type="file" name="photo" />-->
+
+				</div>
+
+					<label for="adresseRetrait">
+						<span th:text="#{vente.retrait}"></span>
+						<span class="asterix">*</span>
+						<span> :</span>
+					</label><br>
+					<select id="adresseRetrait" name="adresseRetraitId" th:field="*{adresseRetraitId}" required>
+						<!-- Adresse du vendeur -->
+						<option th:value="${adresseVendeur.id}"
+								th:text="${adresseVendeur.affichageComplet()}">
 						</option>
-					</optgroup>
-				</select>
+
+						<!-- Adresses ENI -->
+						<optgroup th:label="#{vente.pointRetrait}">
+							<option th:each="adresse : ${adressesEni}"
+									th:value="${adresse.id}"
+									th:text="${adresse.affichageComplet()}">
+							</option>
+						</optgroup>
+					</select>
 				<input type="hidden" th:field="*{id}" />
-			</div>
 
-			<button href="javascript:history.back()" th:text="#{ vente.annuler }"></button>
+				<div class="flexLine marginVT1">
+					<div></div>
+					<div>
+						<a class="btn" href="javascript:history.back()" th:text="#{ vente.annuler }"></a>
+
+						<button class="btn accentBtn2" th:if="${isModif}" type="submit" name="action" value="annuler" th:text="#{vente.annulerVente}"></button>
+
+						<button class="btn accentBtn" th:if="${!isModif}" type="submit" name="action" value="vendre"  th:text="#{ vente.vendre }"></button>
+						<button class="btn accentBtn" th:if="${isModif}" type="submit" name="action" value="modifier" th:text="#{ vente.modifier }"></button>
+
+					</div>
+				</div>
 
 
-
-			<button type="submit" name="action" value="annuler" th:text="#{vente.annulerVente}"></button>
-
-			<button th:if="${isModif}" type="submit"  th:text="#{ vente.vendre }"></button>
-			<button th:if="${!isModif}" type="submit" th:text="#{ vente.modifier }"></button>
-
-
-
-		</form>
+			</form>
+		</div>
 	</main>
 </body>
 </html>

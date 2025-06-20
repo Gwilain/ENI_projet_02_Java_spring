@@ -6,41 +6,51 @@
 
 <head>
 
-<title th:text="#{index.title}">page index</title>
+<title th:text="#{profil.title}">page index</title>
 
 </head>
 
 <body>
 	<main class="center-main">
-		<section>
-			<h1  data-th-text="${user.pseudo}"></h1>
-			<div class="profiLine">
-<!--				<span data-th-text="#{profil.prenom}"></span>-->
-				<span data-th-text="${user.prenom}"></span>
-			</div>
-			<div class="profiLine">
-				<span data-th-text="#{profil.nom}"></span>
-				<span data-th-text="${user.nom}"></span>
-			</div>
-			<div class="profiLine">
-				<span data-th-text="#{profil.email}"></span>
-				<span data-th-text="${user.email}"></span>
-			</div>
-			<div class="profiLine">
-				<span data-th-text="#{profil.telephone}"></span>
-				<span th:if="${user.telephone != null}" data-th-text="${user.telephone}"></span>
-				<span th:if="${user.telephone == null}" data-th-text="#{profil.nonRenseigne}"></span>
-			</div>
+		<div class="content">
+			<section class="subContent">
+			<h2 th:text="#{profil.h1}"></h2>
 
-			<div class="profiLine">
-				<span data-th-text="#{profil.credit}"></span>
-				<span data-th-text="${user.credit}"></span>
-			</div>
+				<div class="flexLine">
+					<span data-th-text="#{profil.pseudo}"></span>
+					<span class="bold" data-th-text="${user.pseudo}"></span>
+				</div>
 
-			<a th:if="${isCUserProfil}" th:href="@{/utilisateur/modifier-profil}" data-th-text="#{profil.btnModfier}"></a>
-			<a th:if="${!isCUserProfil}" href="javascript:history.back()" data-th-text="#{profil.btnRetour}"></a>
 
-		</section>
+				<div class="flexLine">
+					<span class="label" data-th-text="#{profil.prenom}"></span>
+					<span  data-th-text="${user.prenom}"></span>
+				</div>
+				<div class="flexLine">
+					<span class="label" data-th-text="#{profil.nom}"></span>
+					<span data-th-text="${user.nom}"></span>
+				</div>
+				<div class="flexLine">
+					<span class="label"  data-th-text="#{profil.email}"></span>
+					<span data-th-text="${user.email}"></span>
+				</div>
+				<div class="flexLine">
+					<span class="label"  data-th-text="#{profil.telephone}"></span>
+					<span th:if="${user.telephone != null}" data-th-text="${user.telephone}"></span>
+					<span th:if="${user.telephone == null}" data-th-text="#{profil.nonRenseigne}"></span>
+				</div>
+
+				<div class="flexLine">
+					<span class="label"  data-th-text="#{profil.credit}"></span>
+					<span data-th-text="${user.credit}"></span>
+				</div>
+				<div class="flexLine marginVT1">
+					<div></div>
+				<a class="btn accentBtn" th:if="${isCUserProfil}" th:href="@{/utilisateur/modifier-profil}" data-th-text="#{profil.btnModfier}"></a>
+				<a  class="btn" th:if="${!isCUserProfil}" href="javascript:history.back()" data-th-text="#{profil.btnRetour}"></a>
+				</div>
+			</section>
+		</div>
 	</main>
 
 </body>

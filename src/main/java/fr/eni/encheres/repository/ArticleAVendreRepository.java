@@ -125,5 +125,8 @@ public interface ArticleAVendreRepository extends JpaRepository<ArticleAVendre, 
     List<ArticleAVendre> findVentesTermineesByPseudoAndCategorie(@Param("pseudo") String pseudo, @Param("categorieId") Integer categorieId, @Param("now") LocalDate now);
 
 
+    @Query("SELECT MAX(a.photo) FROM ArticleAVendre a")
+    Integer findMaxPhotoId();
+
     ArticleAVendre getArticleAVendreById(Integer id);
 }

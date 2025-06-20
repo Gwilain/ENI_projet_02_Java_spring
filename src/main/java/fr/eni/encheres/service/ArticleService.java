@@ -200,4 +200,9 @@ public class ArticleService {
         return dto;
     }
 
+    public int getPhotoName(){
+        int photoId = articleAVendreRepository.findMaxPhotoId();
+        return photoId;
+    }
+
 }

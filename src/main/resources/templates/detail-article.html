@@ -33,7 +33,7 @@
 				<div>
 					<span data-th-text="#{vente.prix}"></span>
 <!--					<span data-th-text="${article.prixActuel}"></span>-->
-					<span th:if="${article.prixActuel != null}" th:text="${article.prixActuel} + #{points}"></span>
+					<span th:if="${article.prixActuel != null}" th:text="${article.prixActuel} + #{flouz}"></span>
 
 					<span th:if="${article.prixActuel == null}" th:text="#{vente.pasEncoreOffre}"></span>
 				</div>

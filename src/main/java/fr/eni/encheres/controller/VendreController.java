@@ -17,7 +17,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -93,6 +98,20 @@ public class VendreController {
 
             return "redirect:/mes-ventes-non-debutees";
         }
+
+        /*if (!file.isEmpty()) {
+            Path uploadPath = Paths.get("uploads/");
+           // Files.createDirectories(uploadPath);
+            String fileName = articleService.getPhotoName() + ".jpg";
+
+            Path filePath = uploadPath.resolve(fileName);
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+
+
+            // Sauvegarder le nom du fichier dans ton DTO ou entité si besoin
+            //articleDTO.setPhoto(fileName);
+        }*/
 
         articleService.registerVente(form, user);
 

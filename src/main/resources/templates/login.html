@@ -14,34 +14,33 @@
 
 <body>
 	<main>
-		<form th:action="@{/login}" method="post">
+		<div class="content">
+			<form class="subContent" th:action="@{/login}" method="post">
 
-			<h1 th:text="#{login.h1}"></h1>
+				<h2 th:text="#{login.h1}"></h2>
 
-			<!-- Message d'erreur apparait uniquement si erreur avec message dynamique  -->
-<!--			<div class="cards" th:if="${param.error}" th:text="#{login.error}"></div>-->
+				<!-- Message d'erreur apparait uniquement si erreur avec message dynamique  -->
+	<!--			<div class="cards" th:if="${param.error}" th:text="#{login.error}"></div>-->
+	<!--			<div th:if="${param.logout}" th:text="#{login.logout}"></div>-->
 
-<!--			<div th:if="${param.logout}" th:text="#{login.logout}"></div>-->
 
-			<ul class="flex-outer">
-				<li>
-					<label for="username" th:text="#{login.username}"></label>
-					<input id="username" name="username" />
-				</li>
-				<li>
-					<label for="password" th:text="#{login.pwd}"></label>
-					<input id="password" type="password" name="password" />
-				</li>
-				<li>
-					<button type="submit" th:text="#{login.button}"></button>
-				</li>
+					<div class="flexLine marginV1">
+						<label for="username" th:text="#{login.username}"></label>
+						<input id="username" name="username" />
+					</div>
+					<div class="flexLine marginV1">
+						<label for="password" th:text="#{login.pwd}"></label>
+						<input id="password" type="password" name="password" />
+					</div>
+					<div class="flexLine btns marginV1 marginVT1">
+						<a class="btn" th:href="@{/utilisateur/inscription}" th:text="#{login.buttonInscription}"></a>
+						<button class="btn accentBtn" type="submit" th:text="#{login.button}"></button>
+					</div>
 
-				<li>
-					<a th:href="@{/utilisateur/inscription}" th:text="#{login.buttonInscription}"></a>
-				</li>
-			</ul>
 
-		</form>
+
+			</form>
+		</div>
 	</main>
 </body>
 
