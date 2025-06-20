@@ -15,7 +15,7 @@ public class ArticleDetailDTO {
     private int id;
     private String nom;
     private String description;
-    private String photoUrl;
+    private int photoId;
     private LocalDate dateDebut;
     private LocalDate dateFin;
     private Integer prixInitial;

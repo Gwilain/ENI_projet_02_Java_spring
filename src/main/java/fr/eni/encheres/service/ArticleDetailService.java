@@ -36,6 +36,7 @@ public class ArticleDetailService {
         ArticleDetailDTO articleDetailDTO = new ArticleDetailDTO();
         articleDetailDTO.setNom(aav.getNom());
         articleDetailDTO.setId(aav.getId());
+        articleDetailDTO.setPhotoId(aav.getPhoto());
 
         articleDetailDTO.setDescription(aav.getDescription());
         articleDetailDTO.setDateDebut(aav.getDateDebutEncheres());

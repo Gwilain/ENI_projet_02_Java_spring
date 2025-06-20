@@ -12,78 +12,86 @@
 
 <body>
 	<main class="center-main">
-		<section>
-			<h1  data-th-text="#{articleDetail.titre}"></h1>
-			<div class="profiLine">
-				<div>
-					<span data-th-text="#{vente.article}"></span>
-					<span data-th-text="${article.nom}"></span>
-				</div>
-				<div>
-					<span data-th-text="#{vente.miseAPrix}"></span>
-					<span data-th-text="${article.prixInitial}"></span>
-				</div>
-			</div>
+		<div class="content">
+			<section class="subContent">
+				<h2 class="marginVB3"  data-th-text="#{articleDetail.titre}"></h2>
+						<h3 class="bold" data-th-text="${article.nom}"></h3>
 
-			<div class="profiLine">
-				<div>
-					<span data-th-text="#{vente.categorie}"></span>
-					<span data-th-text="${article.nomCategorie}"></span>
+				<div class="photoCardWrapper">
+					<img th:src="'/photos/'+(${article.photoId}?${article.photoId} : 0 )+'.jpg'">
+					<!--							<img th:src="'/photos/'+${article.photo}+'.jpg'">-->
 				</div>
-				<div>
-					<span data-th-text="#{vente.prix}"></span>
-<!--					<span data-th-text="${article.prixActuel}"></span>-->
-					<span th:if="${article.prixActuel != null}" th:text="${article.prixActuel} + #{flouz}"></span>
 
-					<span th:if="${article.prixActuel == null}" th:text="#{vente.pasEncoreOffre}"></span>
-				</div>
-			</div>
 
-			<div class="profiLine">
-				<div>
-					<span data-th-text="#{vente.description}"></span>
-					<span data-th-text="${article.description}"></span>
+				<div class="flexLine">
+						<span data-th-text="#{vente.miseAPrix}+' :'"></span>
+						<span class="bold" data-th-text="${article.prixInitial}+' ' + #{points}"></span>
 				</div>
-				<div>
-					<span data-th-text="#{vente.dateFin}"></span>
+
+
+					<div class="flexLine">
+						<span data-th-text="#{vente.categorie}+' :'"></span>
+						<span data-th-text="${article.nomCategorie}"></span>
+					</div>
+
+					<div class="flexLine">
+						<span data-th-text="#{vente.prix} +' :'"></span>
+	<!--					<span data-th-text="${article.prixActuel}"></span>-->
+						<span class="bold italic accentColor" th:if="${article.prixActuel != null}" th:text="${article.prixActuel}+' ' + #{points}"></span>
+
+						<span th:if="${article.prixActuel == null}" th:text="#{vente.pasEncoreOffre}"></span>
+					</div>
+
+
+				<div class="flexLine startAlign">
+						<span class="block" data-th-text="#{vente.description}+' :'"></span>
+						<span class="block italic" data-th-text="${article.description}"></span>
+				</div>
+				<div class="flexLine">
+					<span data-th-text="#{vente.dateFin}+' :'"></span>
 					<span data-th-text="${article.dateFin}"></span>
 				</div>
-			</div>
-			<div>
-				<span data-th-text="#{vente.retrait}"></span>
-				<span data-th-text="${article.adresseRetrait}"></span>
-			</div>
-			<div>
-				<span data-th-text="#{vente.vendeur}"></span>
-				<span data-th-text="${article.pseudoVendeur}"></span>
-			</div>
-			<div sec:authorize="isAuthenticated()"  th:if="${!article.modifiable }" >
+				<div class="flexLine">
+					<span data-th-text="#{vente.retrait}+' :'"></span>
+					<span data-th-text="${article.adresseRetrait}"></span>
+				</div>
+				<div class="flexLine">
+<!--					<span data-th-text="#{vente.vendeur}+' :'"></span>-->
+					<span data-th-text="#{vente.vendeur}+' :'"></span><a class="accentColor underline" th:href="@{/utilisateur/profil(pseudo=${article.pseudoVendeur})}" data-th-text="${article.pseudoVendeur}"></a>
+				</div>
+				<div sec:authorize="isAuthenticated()"  th:if="${!article.modifiable }" >
 
-				<form th:object="${enchere}" th:action="@{/detail-article}" method="post">
-<!--				<form th:object="${enchere}" th:action="@{/encherir}" method="post">-->
-<!--					<input type="hidden" th:field="*{idArticle}" th:value="${article.id}"  />-->
-					<label th:text="#{vente.monEnchere}"></label>
-<!--					<input type="hidden" th:field="*{idArticle}" th:value="${article.id}" />-->
+					<form th:object="${enchere}" th:action="@{/detail-article}" method="post">
+	<!--				<form th:object="${enchere}" th:action="@{/encherir}" method="post">-->
+	<!--					<input type="hidden" th:field="*{idArticle}" th:value="${article.id}"  />-->
+						<div class="flexLine">
+							<label th:text="#{vente.monEnchere}"></label>
 
-					<p th:text="${article.id}"></p>
-					<input type="number"
-						   th:field="*{montant}"
-						   th:min="${article.prixActuel}"
-						   th:value="${article.prixActuel}"
-						   step="1"
-						    />
+							<input type="number" class="marginVB3"
+								   th:field="*{montant}"
+								   th:min="${article.prixActuel}"
+								   th:value="${article.prixActuel}"
+								   step="1"
+									/>
+						</div>
+						<div class="flexLine">
+							<div></div>
+							<div>
+								<a class="btn" href="javascript:history.back()" th:text="#{vente.retour}"></a>
+								<a th:if="${article.modifiable }" th:href="@{vendre(id=${ article.id })}" th:text="#{vente.modifier}"></a>
+								<button class="btn accentBtn" type="submit" th:text="#{vente.encherir}"></button>
+							</div>
+						</div>
+							<input type="hidden" th:field="*{idArticle}" />
+					</form>
+<!--					<a sec:authorize="isAuthenticated()" class="btn" href="javascript:history.back()" th:text="#{vente.retour}"></a>-->
+				</div>
+				<div class="flexLine">
+					<div></div>
 
-					<input type="hidden" th:field="*{idArticle}" />
-
-					<button type="submit" th:text="#{vente.encherir}"></button>
-				</form>
-			</div>
-
-			<a href="javascript:history.back()" th:text="#{vente.retour}"></a>
-
-			<a th:if="${article.modifiable }" th:href="@{vendre(id=${ article.id })}" th:text="#{vente.modifier}"></a>
-
-		</section>
+				</div>
+			</section>
+		</div>
 	</main>
 
 </body>

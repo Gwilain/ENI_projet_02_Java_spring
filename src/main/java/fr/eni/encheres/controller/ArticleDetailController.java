@@ -23,8 +23,6 @@ public class ArticleDetailController {
     private ArticleDetailService articleDetailService;
 
 
-
-
     @GetMapping
     public String articleDetail(@RequestParam( value="id", required = true ) long id,
                                 Principal principal,

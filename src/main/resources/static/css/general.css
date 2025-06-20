@@ -177,6 +177,9 @@ main {
     align-items: start;
 }
 
+.startAlign{
+    align-items: start;
+}
 
 .subContent{
 
@@ -276,6 +279,10 @@ footer {
 
 .italic{
     font-style: italic;
+}
+
+.block{
+    display: blo
 }
 
 .accentColor{
