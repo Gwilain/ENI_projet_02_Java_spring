@@ -1,76 +1,82 @@
-## 📘 Projet ENI 02 - Java Spring - Site d'enchère/troc
+## 🛠️ Projet ENI 02 – Java Spring – Site d’enchères / troc
 
 ### 🚀 Technologies utilisées
-- HTML
-- CSS
-- JavaScript
-- Java (Spring, Spring boot, Spring Security)
-- SQL server
-- thyme leaf
+- HTML  
+- CSS  
+- JavaScript  
+- Java (Spring, Spring Boot, Spring Security)  
+- SQL Server  
+- Thymeleaf  
 
 ### 📝 Description
 
-Il s'agit du **deuxième projet réalisé en autonomie** sur un peu mons de 2 semaines dans le cadre de maformation à l'ENI.
+Ce projet est le **deuxième réalisé en autonomie**, sur un peu moins de deux semaines, dans le cadre de ma formation à l'ENI.
 
-L'objectif était de réaliser en partie un site d'enchère/troc entre particulier!.
-Les fonctionnalités suivantes ont étées réalisées (elles sont toutes fonctionnelles avec écriture en base de données) :
+L’objectif était de développer une partie d’un site d’enchères et de troc entre particuliers.
 
-- Affichages des annonces et fiches produit
-- Recherche par nom et par catégories
-- Connexion (spring security)
-- Inscription / création d'un profil
-- Filtres supplémentaires pour les membres connectés (enchères en ouvertes, mes enchères en cours,  mes enchères remportés, mes ventes en cours, non débutées et terminées)
-- Affichage detail des profills
-- Modifications du profil connecté
-- Mise en vente d'un article (avec détails de la vente (description, prix), choix des dates mais sans upload de photo)
+#### ✅ Fonctionnalités développées (toutes fonctionnelles avec persistance en base de données) :
+- Affichage des annonces et fiches produits  
+- Recherche par nom et par catégorie  
+- Authentification via Spring Security  
+- Inscription / création de profil  
+- Filtres supplémentaires pour les membres connectés :  
+  - Enchères ouvertes  
+  - Mes enchères en cours  
+  - Mes enchères remportées  
+  - Mes ventes en cours, non débutées, terminées  
+- Affichage détaillé des profils  
+- Modification du profil connecté  
+- Mise en vente d’un article (avec description, prix, dates de vente – **sans upload de photo**)  
 
-De nombreuses fonctionnalités comme l'upload de photos d'articles, la paginations des ventes, la conclusion d'une enchères, retours UI (ex : messages de confirmations,..) n'ont pas pu être développés dans le court temps de ce projet.
+#### ❌ Fonctionnalités non implémentées (faute de temps) :
+- Upload de photos d’articles  
+- Pagination des annonces  
+- Gestion de la fin des enchères  
+- Feedbacks utilisateur (ex. : messages de confirmation, erreurs, etc.)
 
+---
 
 ### 🔍 Aperçu
-Exemples des wireframe founies (pas de maquettes fournies)
+
+#### 📐 Wireframes fournis (pas de maquettes graphiques)
 ![exemples maquettes](./screenshots/000_maquettes.jpg)
 
+---
 
-#### 🏠 Page d'accueil - non connecté
+#### 🏠 Page d'accueil – non connecté
 ![screenshot de la page d'accueil](./screenshots/00_accueil.jpg)
 
-Effet roll over et accés fiche
+Effet *rollover* et accès aux fiches  
 ![screenshot de la page d'accueil](./screenshots/01_rollOver.gif)
 
+---
 
-#### ℹ️ Détail article
+#### 🛒 Détail d’un article
 ![screenshot de la page infos](./screenshots/02_detailArticle.jpg)
 
-#### ℹ️ Écran de connexion
-![screenshot de la page infos](./screenshots/03_connexion.jpg)
+#### 🔐 Écran de connexion
+![screenshot de la page connexion](./screenshots/03_connexion.jpg)
 
-#### ℹ️ Création d'un profil
-![screenshot des filtres](./screenshots/12_ceationProfil.jpg)
+#### 🧾 Création d’un profil
+![screenshot création de profil](./screenshots/12_ceationProfil.jpg)
 
-#### ℹ️  Page d'accueil - connecté avec des filtres supplémentaires
-![screenshot des filtres](./screenshots/04_filtres.jpg)
+#### 🔎 Accueil connecté – avec filtres supplémentaires
+![screenshot filtres](./screenshots/04_filtres.jpg)  
+![screenshot filtres](./screenshots/05_filtres2.jpg)  
+![screenshot filtres](./screenshots/06_filtres3.jpg)  
+![screenshot filtres](./screenshots/07_filtres4.jpg)
 
-#### ℹ️  Page d'accueil - connecté avec des filtres supplémentaires
-![screenshot des filtres](./screenshots/05_filtres2.jpg)
+#### 📄 Détail du profil
+![screenshot détail profil](./screenshots/08_detailsProfil.jpg)
 
-#### ℹ️  Page d'accueil - connecté avec des filtres supplémentaires
-![screenshot des filtres](./screenshots/06_filtres3.jpg)
+#### ✏️ Modification du profil
+![screenshot modification profil](./screenshots/09_modifProfil.jpg)
 
-#### ℹ️  Page d'accueil - connecté avec des filtres supplémentaires + recherche texte et catégorie
-![screenshot des filtres](./screenshots/07_filtres4.jpg)
+#### 📦 Mise en vente d’un article
+![screenshot mise en vente](./screenshots/11_articleListe.jpg)
 
-#### ℹ️ Écran détail du profil
-![screenshot des filtres](./screenshots/08_detailsProfil.jpg)
+---
 
-#### ℹ️ Écran modification du profil
-![screenshot des filtres](./screenshots/09_modifProfil.jpg)
-
-#### ℹ️ Mise en venre d'un article
-![screenshot des filtres](./screenshots/11_articleListe.jpg)
-
-
-
-### 👨‍💻 Auteur
-Ghislain Gillet – Développeur Full Stack en reconversion  
-[LinkedIn](https://www.linkedin.com/in/ghislain-gillet44)  
+### 👨‍💻 Auteur  
+**Ghislain Gillet** – Développeur Full Stack en reconversion  
+🔗 [Mon profil LinkedIn](https://www.linkedin.com/in/ghislain-gillet44)
