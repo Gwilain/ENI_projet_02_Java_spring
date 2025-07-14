@@ -41,15 +41,17 @@ L’objectif était de développer une partie d’un site d’enchères et de tr
 #### 📐 Wireframes fournis (pas de maquettes graphiques)
 ![exemples maquettes](./screenshots/000_maquettes.jpg)
 
+
 ---
+
 
 #### 🏠 Page d'accueil – non connecté
 ![screenshot de la page d'accueil](./screenshots/00_accueil.jpg)
 
+
 Effet *rollover* et accès aux fiches  
 ![screenshot de la page d'accueil](./screenshots/01_rollOver.gif)
 
----
 
 #### 🛒 Détail d’un article
 ![screenshot de la page infos](./screenshots/02_detailArticle.jpg)
@@ -62,9 +64,13 @@ Effet *rollover* et accès aux fiches
 
 #### 🔎 Accueil connecté – avec filtres supplémentaires
 ![screenshot filtres](./screenshots/04_filtres.jpg)  
+
 ![screenshot filtres](./screenshots/05_filtres2.jpg)  
+
 ![screenshot filtres](./screenshots/06_filtres3.jpg)  
+
 ![screenshot filtres](./screenshots/07_filtres4.jpg)
+
 
 #### 📄 Détail du profil
 ![screenshot détail profil](./screenshots/08_detailsProfil.jpg)
