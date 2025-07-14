@@ -23,7 +23,6 @@
 	<!--			<div class="cards" th:if="${param.error}" th:text="#{login.error}"></div>-->
 	<!--			<div th:if="${param.logout}" th:text="#{login.logout}"></div>-->
 
-
 					<div class="flexLine marginV1">
 						<label for="username" th:text="#{login.username}"></label>
 						<input id="username" name="username" />
@@ -33,12 +32,18 @@
 						<input id="password" type="password" name="password" />
 					</div>
 					<div class="flexLine btns marginV1 marginVT1">
-						<a class="btn" th:href="@{/utilisateur/inscription}" th:text="#{login.buttonInscription}"></a>
-						<button class="btn accentBtn" type="submit" th:text="#{login.button}"></button>
+						<div></div>
+						<div>
+							<a  class="btn" href="javascript:history.back()" data-th-text="#{profil.btnRetour}"></a>
+							<button class="btn accentBtn" type="submit" th:text="#{login.button}"></button>
+						</div>
 					</div>
 
 
-
+					<p class="redText" th:text="#{login.messageInscription}"></p>
+					<div class="btnInscrContainer">
+						<a class="btn accentBtn2 btnInscr" th:href="@{/utilisateur/inscription}" th:text="#{login.buttonInscription}"></a>
+					</div>
 			</form>
 		</div>
 	</main>

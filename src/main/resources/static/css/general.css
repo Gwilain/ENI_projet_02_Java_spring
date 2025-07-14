@@ -69,6 +69,11 @@ li{
     margin-top: 1rem;
 }
 
+.marginV4{
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
 .marginVB1{
     margin-bottom: 0.25rem;
 }
@@ -295,6 +300,10 @@ footer {
     pointer-events: none;
 }
 
+.redText{
+    color: var(--accent-color);
+    text-align: center;
+}
 
 
 /*****************INDEX MENU ********************/
@@ -534,6 +543,19 @@ label, .label{
     padding-left: 47px;
     /*display: flex;
     flex-direction: column;*/
+}
+
+.btnInscrContainer{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnInscr{
+    margin: 2rem auto;
 }
 /*
 main {
