@@ -5,7 +5,7 @@
 - CSS  
 - JavaScript  
 - Java (Spring, Spring Boot, Spring Security)  
-- SQL Server  
+- SQL Server (Les requêtes de création de tables nous ont été fournies.)
 - Thymeleaf  
 
 ### 📝 Description
